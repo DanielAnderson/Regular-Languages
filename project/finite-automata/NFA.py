@@ -1,12 +1,11 @@
 from moveFunction import MoveFunction
-from move import Move
 
-def stringToSet(stringOrSet):
-	if type(stringOrSet) is set:
-		return stringOrSet
+def convertToSet(stringListOrSet):
+	if type(stringListOrSet) is set or type(stringListOrSet) is list:
+		return set(stringListOrSet)
 	else:
 		answer = set()
-		answer.add(stringOrSet)
+		answer.add(stringListOrSet)
 		return answer
 
 class NFA:
@@ -17,24 +16,24 @@ class NFA:
 		self.states = states
 		self.alphabet = alphabet 
 		self.startState = startState
-		self.finalStates = stringToSet(finalStates)
+		self.finalStates = convertToSet(finalStates)
 		self.deltaFunction = MoveFunction()
 
-	def addMove(self, move, results):
+	def addMove(self, initialState, inputSymbol, results):
 		# Checks if the state is a valid state, if the input symbol is a valid input symbol, and that the resultant states are valid states
-		results = stringToSet(results)
-		assert move.state() in self.states 
-		assert move.inputSymbol() in self.alphabet 
+		results = convertToSet(results)
+		assert initialState in self.states 
+		assert inputSymbol in self.alphabet 
 		assert results <= self.states 
-		self.deltaFunction.addMove(move, results)
+		self.deltaFunction.addMove(initialState, inputSymbol, results)
 
 	def isInLanguage(self, string):
-		currentStates = stringToSet(self.startState)
+		currentStates = convertToSet(self.startState)
 
 		for character in string:
 			nextStates = set()
 			for state in currentStates: 
-				nextStates |= self.deltaFunction.getResults(Move(state,character))
+				nextStates |= self.deltaFunction.getResults(state,character)
 			currentStates = nextStates
 		return len(currentStates & self.finalStates) > 0
 
@@ -44,9 +43,9 @@ class NFA:
 
 
 nfa = NFA(states={"q1","q2"}, alphabet={"a","b"}, startState="q1", finalStates="q1")
-nfa.addMove(Move("q1", "a"), "q1")
-nfa.addMove(Move("q2", "a"), "q2")
-nfa.addMove(Move("q2", "b"), "q1")
-nfa.addMove(Move("q1", "b"), "q2")
+nfa.addMove("q1", "a", "q1")
+nfa.addMove("q2", "a", "q2")
+nfa.addMove("q2", "b", "q1")
+nfa.addMove("q1", "b", "q2")
 
 print(nfa.isInLanguage("bbbabaaabbb"))
