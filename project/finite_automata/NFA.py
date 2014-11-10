@@ -31,6 +31,7 @@ class NFA:
 		currentStates = convertToSet(self.startState)
 
 		for character in string:
+			assert character in self.alphabet
 			nextStates = set()
 			for state in currentStates: 
 				nextStates |= self.deltaFunction.getResults(state,character)

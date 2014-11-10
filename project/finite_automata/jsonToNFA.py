@@ -19,6 +19,6 @@ def verifyNFA(theJSON):
 	# todo
 	return true
 
-theJSON = '{"states": ["q1", "q2"], "alphabet": ["a","b"], "startState": "q1", "finalStates": ["q1"], "moves" : {"q1": {"a": ["q1"], "b": ["q2"]}, "q2": {"a": ["q2"], "b": ["q1"]}}}'
-theNFA = createNFA(theJSON)
-print(theNFA)
+# theJSON = '{"states": ["q1", "q2"], "alphabet": ["a","b"], "startState": "q1", "finalStates": ["q1"], "moves" : {"q1": {"a": ["q1"], "b": ["q2"]}, "q2": {"a": ["q2"], "b": ["q1"]}}}'
+# theNFA = createNFA(theJSON)
+# print(theNFA)
