@@ -4,4 +4,3 @@ class TestNFA(unittest.TestCase):
 
 	def test_NFA(self):
 		self.assertEqual(1, 1)
-unittest.main()
