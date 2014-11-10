@@ -12,7 +12,11 @@ How to import project files from other files:
 	So if you want to import the class fooBar from the file FooBar.py, in the directory Regular Languages/foo/bar/fooBar.py
 	you would type "from foo.bar.FooBar import FooBar" 
 	For examples, go to testNFA.py 
+	To be able to import from a directory, you must have __init__.py (an empty file) in the directory
 
 To run tests:
 	run python3 -m unittest discover
 	This will run all tests, defined as (I believe) any methods which start with the name test in a class that inherits from unittest.TestCase
+	
+	To define your own test suites:
+		add to test.py a suite with what you want to test (with command line checking)
