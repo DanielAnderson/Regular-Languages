@@ -44,7 +44,6 @@ class MoveFunction:
 	def __str__(self):
 		return str(self.moves)
 
-a = Move('q1', 'a')
 
 
 
