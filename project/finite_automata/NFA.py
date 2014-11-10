@@ -1,4 +1,4 @@
-from moveFunction import MoveFunction
+from project.finite_automata.moveFunction import MoveFunction
 
 def convertToSet(stringListOrSet):
 	if type(stringListOrSet) is set or type(stringListOrSet) is list:
@@ -42,10 +42,10 @@ class NFA:
 		return "{\n\t" + "Q: " + self.states.__str__() + "\n\t" + "Σ: " + self.alphabet.__str__() + "\n\t" + "δ: " + self.deltaFunction.__str__() + "\n\t" + "q0: " + self.startState.__str__() + "\n\tF: " +self.finalStates.__str__() + "\n}"
 
 
-nfa = NFA(states={"q1","q2"}, alphabet={"a","b"}, startState="q1", finalStates="q1")
-nfa.addMove("q1", "a", "q1")
-nfa.addMove("q2", "a", "q2")
-nfa.addMove("q2", "b", "q1")
-nfa.addMove("q1", "b", "q2")
+# nfa = NFA(states={"q1","q2"}, alphabet={"a","b"}, startState="q1", finalStates="q1")
+# nfa.addMove("q1", "a", "q1")
+# nfa.addMove("q2", "a", "q2")
+# nfa.addMove("q2", "b", "q1")
+# nfa.addMove("q1", "b", "q2")
 
-print(nfa.isInLanguage("bbbabaaabbb"))
+# print(nfa.isInLanguage("bbbabaaabbb"))

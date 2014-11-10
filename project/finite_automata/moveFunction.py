@@ -1,4 +1,4 @@
-from deltaStar import DeltaStar
+from project.finite_automata.deltaStar import DeltaStar
 
 class Move:
 	"""Represents a move- with a state (string) and input symbol (string)"""
