@@ -29,7 +29,7 @@ def verifyNFA(theJSON):
 	for state in moves:
 		assert state in theJSON['states']
 		for alphabetMember in moves[state]:
-			assert alphabetMember in theJSON['alphabet'] or alphabetMember is 'lambda' 
+			assert alphabetMember in theJSON['alphabet'] or alphabetMember == NFA.LAMBDA
 			for nextState in convertToList(moves[state][alphabetMember]):
 				assert nextState in theJSON['states']
 
