@@ -56,6 +56,32 @@ class TestNFA(unittest.TestCase):
 		'''
 		self.machine2 = jsonToNFA.createNFA(self.json2)
 
+		self.lambda_moves = '''
+		{
+			"states": ["q0", "q1", "q2", "q3"],
+			"alphabet": "a",
+			"startState": "q0",
+			"finalStates": "q3",
+			"moves":
+				{
+					"q0": {
+						"a": "q1"
+					},
+					"q1": {
+						"a": "q2"
+					},
+					"q2": {
+						"a": "q3",
+						"lambda": "q1"
+					},
+					"q3": {
+						"a": "q0"
+					}
+				}
+		}
+		'''
+		self.lambda_machine = jsonToNFA.createNFA(self.lambda_moves)
+
 	def test_accept_NFA1(self):
 		self.assertTrue(self.machine1.isInLanguage('aaabbaaabb'))
 	def test_deny_NFA1(self):
@@ -78,3 +104,7 @@ class TestNFA(unittest.TestCase):
 		self.assertRaises(AssertionError, self.machine2.isInLanguage, 'aaaaaaaaaaaab')
 	def test_JSON_parser2(self):
 		jsonToNFA.createNFA(self.json2)
+
+	def test_lambda_moves(self):
+		for integer in range(3, 50):
+			self.assertTrue(self.lambda_machine.isInLanguage("a" * integer))
