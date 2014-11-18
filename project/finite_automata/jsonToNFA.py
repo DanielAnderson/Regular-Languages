@@ -1,5 +1,7 @@
 import json
 from project.finite_automata.NFA import NFA
+import project.finite_automata.constants as constants
+
 def createNFA(theJSON):
 	theJSON = json.loads(theJSON)
 	verifyNFA(theJSON)
@@ -29,7 +31,7 @@ def verifyNFA(theJSON):
 	for state in moves:
 		assert state in theJSON['states']
 		for alphabetMember in moves[state]:
-			assert alphabetMember in theJSON['alphabet'] or alphabetMember == NFA.LAMBDA
+			assert alphabetMember in theJSON['alphabet'] or alphabetMember == constants.LAMBDA
 			for nextState in convertToList(moves[state][alphabetMember]):
 				assert nextState in theJSON['states']
 
