@@ -1,9 +1,10 @@
 import unittest
 from project.testing import testNFA
 from project.testing import testNFAVerifier
+from project.testing import testParenParser
 
 # To add test classes, add to this list
-test_classes = [testNFA.TestNFA, testNFAVerifier.TestNFAVerifier]
+test_classes = [testNFA.TestNFA, testNFAVerifier.TestNFAVerifier, testParenParser.TestParenParser]
 
 suites = []
 for test_class in test_classes:
