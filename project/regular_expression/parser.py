@@ -2,7 +2,10 @@
 def parenthesesParser(string):
     print('ARGS: ' + string)
     parsed = __parenParser__(string)
-    ans = [parsed['left']]
+    print('PARSED' + str(parsed))
+    ans = []
+    if len(parsed['left']) > 0:
+        ans.append(parsed['left'])
     # print(parsed)
     if '(' in parsed['middle']:
         ans.append(parenthesesParser(parsed['middle']))
@@ -10,12 +13,15 @@ def parenthesesParser(string):
         ans.append([parsed['middle']])
 
     if '(' in parsed['remainder']:
-        ans.append([parenthesesParser(parsed['remainder'])])
+        ans.append(parenthesesParser(parsed['remainder']))
     elif len(parsed['remainder']) > 0:
         ans.append(parsed['remainder'])
 
     print('ANSWER: ' + ans.__str__())
-    return ans
+    if len(ans) == 1 and len(ans[0]) == 1:
+        return ans[0]
+    else:
+        return ans
 
 '''Given a string <x>(<y>)<z> returns {'left': <x>, 'middle': <y>, 'remainder': <z>}'''
 def __parenParser__(string):
@@ -54,3 +60,4 @@ def __matchLeadingParen__(string):
 
 # print(parenthesesParser('asdf(f(ds)a)'))
 # print(parenthesesParser('f(ds)a'))
+print(parenthesesParser('(c)'))
