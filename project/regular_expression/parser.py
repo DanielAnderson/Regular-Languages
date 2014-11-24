@@ -45,13 +45,3 @@ def __matchLeadingParen__(string):
             return string[1:index], string[index + 1:]
 
         assert count >0
-
-
-
-
-
-    
-
-# print(parenthesesParser('asdf(f(ds)a)'))
-# print(parenthesesParser('f(ds)a'))
-print(parenthesesParser('(c)'))
