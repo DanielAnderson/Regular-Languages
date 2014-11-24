@@ -14,6 +14,12 @@ class TestParenParser(unittest.TestCase):
         self.assertEqual(parser.__matchLeadingParen__(string1), ('()(asdf())', 'remainder'))
         self.assertEqual(parser.__matchLeadingParen__(string2), ('', '()()'))
 
-    def testParser(self):
+    def testParser1(self):
         string1 = 'leftmost(innerLeft(middle(more middle) left middle))end'
         self.assertEqual(parser.parenthesesParser(string1), ['leftmost', ['innerLeft', ['middle', ['more middle'], ' left middle']], 'end'])
+    def testParser2(self):
+        self.assertEqual(parser.parenthesesParser('a((b)(c))'), ['a',[['b'],['c']]])
+    def testParser3(self):
+        self.assertEqual(parser.parenthesesParser('(c)'), ['c'])
+
+
