@@ -18,20 +18,23 @@ class Root(Widget):
     def __init__(self):
         Widget.__init__(self)
         box = BoxLayout(orientation= 'vertical',
-                        valign = 'middle')
+                        size = (600,600))
         lblIntro = Label(text = "Please select which you would like to check:")
         btnNFA = Button(text = "NFA",
                         valign = 'middle',
                         halign = 'center')
-
         btnNFA.bind(on_press = self.pressed)
         
         btnDFA = Button(text = "DFA",
                         valign = 'middle',
                         halign = 'center')
+        btnDFA.bind(on_press = self.pressed)
+
         btnGrm = Button(text = "Regular Grammars",
                         valign = 'middle',
                         halign = 'center')
+        btnGrm.bind(on_press = self.pressed)
+        
         box.add_widget(lblIntro)
         box.add_widget(btnNFA)
         box.add_widget(btnDFA)
@@ -39,9 +42,21 @@ class Root(Widget):
         self.add_widget(box)
 
     def pressed(self,event):
+        boxsave = BoxLayout(orientation = 'vertical')
+        btnImport = Button(text = "Import a File",
+                           valign = 'middle',
+                           halign = 'center')
+        btnMake = Button(text = "Create a New File",
+                           valign = 'middle',
+                           halign = 'center')
+        lblSave = Label(text = "Would you Like to Import a File or Create a New File")
+        
+        for thing in [lblSave, btnImport, btnMake]:
+            boxsave.add_widget(thing)
+        
         ppu = Popup(title = " Title", 
-                    content = Label(text = 'working'),
-                    size = (200,200), 
+                    content = boxsave,
+                    size = (500,500), 
                     size_hint=(None, None),
                     auto_dismiss=True)
         ppu.open()
