@@ -12,7 +12,14 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
+
+flag = 0
+newFile = ""
+inFile = ""
+
+
 
 class Root(Widget):
     def __init__(self):
@@ -23,23 +30,32 @@ class Root(Widget):
         btnNFA = Button(text = "NFA",
                         valign = 'middle',
                         halign = 'center')
-        btnNFA.bind(on_press = self.pressed)
+        btnNFA.bind(on_press = self.pressed, on_release = self.r1)
         
         btnDFA = Button(text = "DFA",
                         valign = 'middle',
                         halign = 'center')
-        btnDFA.bind(on_press = self.pressed)
+        btnDFA.bind(on_press = self.pressed, on_release = self.r2)
 
         btnGrm = Button(text = "Regular Grammars",
                         valign = 'middle',
                         halign = 'center')
-        btnGrm.bind(on_press = self.pressed)
+        btnGrm.bind(on_press = self.pressed, on_release = self.r3)
         
         box.add_widget(lblIntro)
         box.add_widget(btnNFA)
         box.add_widget(btnDFA)
         box.add_widget(btnGrm)
         self.add_widget(box)
+    
+    def r1(self, event):
+        flag = 1
+
+    def r2(self, event):
+        flag = 2
+
+    def r3(self, event):
+        flag = 3
 
     def pressed(self,event):
         boxsave = BoxLayout(orientation = 'vertical')
@@ -49,17 +65,41 @@ class Root(Widget):
         btnMake = Button(text = "Create a New File",
                            valign = 'middle',
                            halign = 'center')
+        btnMake.bind(on_press = self.makePress)#############
+        
         lblSave = Label(text = "Would you Like to Import a File or Create a New File")
         
         for thing in [lblSave, btnImport, btnMake]:
             boxsave.add_widget(thing)
         
-        ppu = Popup(title = " Title", 
+        ppu = Popup(title = "Import or Create File", 
                     content = boxsave,
                     size = (500,500), 
                     size_hint=(None, None),
                     auto_dismiss=True)
         ppu.open()
+
+    def makePress (self,event):
+        boxMake = BoxLayout(orientation = 'vertical')
+        lblMake = Label(text= "Please enter input")
+        txtInput = TextInput()
+        btnSave = Button(text = "Save File",
+                           valign = 'middle',
+                           halign = 'center')
+        ###btnSave.bind(on_press = self.________computefunction_______)##################
+
+        for item in [lblMake, txtInput, btnSave]:
+            boxMake.add_widget(item)
+
+        pop = Popup(title = "New File", 
+                    content = boxMake,
+                    size = (500,500), 
+                    size_hint=(None, None),
+                    auto_dismiss=True)
+        pop.open()
+
+
+
 
 class app1(App):
     def build(self):
