@@ -1,5 +1,4 @@
-
-#We are going to be using Kivy for a GUI
+#We are going to be using Kivy for a main GUI and the included GUI Tkinter for a filechooser
 #First download pygame then download Kivy. Here is the download site:
 #http://www.lfd.uci.edu/~gohlke/pythonlibs/
 #I tried downloading from the Kivy site but had lots of issues, 
@@ -15,10 +14,12 @@ from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
+from tkinter import Tk      #not sure if compatible with linux
+from tkinter.filedialog import askopenfilename
+
 flag = 0
 newFile = ""
 inFile = ""
-
 
 
 class Root(Widget):
@@ -62,10 +63,12 @@ class Root(Widget):
         btnImport = Button(text = "Import a File",
                            valign = 'middle',
                            halign = 'center')
+        btnImport.bind(on_press = self.importPress)
+
         btnMake = Button(text = "Create a New File",
                            valign = 'middle',
                            halign = 'center')
-        btnMake.bind(on_press = self.makePress)#############
+        btnMake.bind(on_press = self.makePress)
         
         lblSave = Label(text = "Would you Like to Import a File or Create a New File")
         
@@ -98,8 +101,10 @@ class Root(Widget):
                     auto_dismiss=True)
         pop.open()
 
-
-
+    def importPress (self,event):
+        Tk().withdraw()
+        filename = askopenfilename()
+        print(filename)
 
 class app1(App):
     def build(self):
