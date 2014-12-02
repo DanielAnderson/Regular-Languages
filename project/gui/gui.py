@@ -14,15 +14,16 @@ from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
-from tkinter import Tk      #not sure if compatible with linux
+from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
-flag = 0
-newFile = ""
-inFile = ""
 
-
+#Main Widget
 class Root(Widget):
+    flag = 0
+    newFile = ""
+    impFile = ""
+    input = ""
     def __init__(self):
         Widget.__init__(self)
         box = BoxLayout(orientation= 'vertical',
@@ -31,8 +32,9 @@ class Root(Widget):
         btnNFA = Button(text = "NFA",
                         valign = 'middle',
                         halign = 'center')
-        btnNFA.bind(on_press = self.pressed, on_release = self.r1)
-        
+        btnNFA.bind(on_press = self.pressed)
+        btnNFA.bind(on_release = self.r1)
+
         btnDFA = Button(text = "DFA",
                         valign = 'middle',
                         halign = 'center')
@@ -42,22 +44,25 @@ class Root(Widget):
                         valign = 'middle',
                         halign = 'center')
         btnGrm.bind(on_press = self.pressed, on_release = self.r3)
-        
+
         box.add_widget(lblIntro)
         box.add_widget(btnNFA)
         box.add_widget(btnDFA)
         box.add_widget(btnGrm)
         self.add_widget(box)
     
+    #These set the flag so the program knows which function to use to check string
     def r1(self, event):
-        flag = 1
+        self.flag = 1
 
     def r2(self, event):
-        flag = 2
+        self.flag = 2
 
     def r3(self, event):
-        flag = 3
+        self.flag = 3
 
+    #When user pushes any NFA,DFA, or Regular Grammars button, this calls this popup 
+    #to ask if they are importing a file or making a file for their rules
     def pressed(self,event):
         boxsave = BoxLayout(orientation = 'vertical')
         btnImport = Button(text = "Import a File",
@@ -81,17 +86,18 @@ class Root(Widget):
                     size_hint=(None, None),
                     auto_dismiss=True)
         ppu.open()
-
+    
+    #If user chooses to Make a File for the rules, then a popup is generated to save their  
+    #rules in a .txt file then prompt for a string input to check against the rules 
     def makePress (self,event):
         boxMake = BoxLayout(orientation = 'vertical')
         lblMake = Label(text= "Please enter input")
-        txtInput = TextInput()
+        txtInMake = TextInput()
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
-        ###btnSave.bind(on_press = self.________computefunction_______)##################
-
-        for item in [lblMake, txtInput, btnSave]:
+        btnSave.bind(on_press = self.savePress)
+        for item in [lblMake, txtInMake, btnSave]:
             boxMake.add_widget(item)
 
         pop = Popup(title = "New File", 
@@ -101,11 +107,65 @@ class Root(Widget):
                     auto_dismiss=True)
         pop.open()
 
+    #If user chooses to Import a File, the File Chooser opens and they can select which file they wish 
+    #to use as their rules and prompts for the string input
     def importPress (self,event):
+        boxInput = BoxLayout(orientation = 'vertical')
+        lblInput = Label(text= "Please enter string you would like to test:")
+        txtInput = TextInput()
+        btnSaveInput = Button(text = "Save and Check",
+                           valign = 'middle',
+                           halign = 'center')
+        ###btnSaveInput.bind(on_press = self.________input string and check_______)##################
+
+        for thing in [lblInput, txtInput, btnSaveInput]:
+            boxInput.add_widget(thing)
+
+        popCompute = Popup(title = "Input String",
+                           content = boxInput,
+                           size = (500,500),
+                           size_hint = (None, None),
+                           auto_dismiss=True)
+
         Tk().withdraw()
         filename = askopenfilename()
-        print(filename)
+        
+        print(self.flag)#check flag changes
+        self.impFile = filename
+        print(self.impFile)#check file name 
 
+        popCompute.open()
+
+    def savePress (self, event):
+        boxInput = BoxLayout(orientation = 'vertical')
+        lblInput = Label(text= "Please enter string you would like to test:")
+        txtInput = TextInput()
+        btnSaveInput = Button(text = "Save and Check",
+                           valign = 'middle',
+                           halign = 'center')
+        ###btnSaveInput.bind(on_press = self.________input string and check_______)##################
+
+        for thing in [lblInput, txtInput, btnSaveInput]:
+            boxInput.add_widget(thing)
+
+        popCompute = Popup(title = "Input String",
+                           content = boxInput,
+                           size = (500,500),
+                           size_hint = (None, None),
+                           auto_dismiss=True)
+        popCompute.open()
+
+#    def runIt (self,event):
+#       if self.flag==1:
+
+#       elif self.flag == 2:
+
+#       elif self.flag == 3:
+
+ #      else
+  #          print('ERROR OCCURRED FLAG=0)
+
+#Execution app runs widget
 class app1(App):
     def build(self):
         return Root()
