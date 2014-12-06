@@ -13,6 +13,8 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
+from kivy.clock import Clock
+Clock.max_iteration = 20
 
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -24,10 +26,11 @@ class Root(Widget):
     newFile = ""
     impFile = ""
     input = ""
+    rule = ""
     def __init__(self):
         Widget.__init__(self)
         box = BoxLayout(orientation= 'vertical',
-                        size = (600,600))
+                        size = (600, 600))
         lblIntro = Label(text = "Please select which you would like to check:")
         btnNFA = Button(text = "NFA",
                         valign = 'middle',
@@ -35,6 +38,7 @@ class Root(Widget):
         btnNFA.bind(on_press = self.pressed)
         btnNFA.bind(on_release = self.r1)
 
+        #dont need DFA
         btnDFA = Button(text = "DFA",
                         valign = 'middle',
                         halign = 'center')
@@ -91,21 +95,35 @@ class Root(Widget):
     #rules in a .txt file then prompt for a string input to check against the rules 
     def makePress (self,event):
         boxMake = BoxLayout(orientation = 'vertical')
-        lblMake = Label(text= "Please enter input")
-        txtInMake = TextInput()
+        lblMake = Label(text= "Please enter Rules")
+        txtInMake = TextInput(text = '''{
+						                    "states": [], 
+						                    "alphabet": [], 
+						                    "startState": "", 
+						                    "finalStates": [], 
+						                    "moves" : 
+							                        {
+                                                    
+                                                    }
+				                    	}''', size_hint = (1, 1.3))
+
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
-        btnSave.bind(on_press = self.savePress)
+        btnSave.bind(on_press =  lambda but: self.savePress(event,txtInMake.text))
+        
         for item in [lblMake, txtInMake, btnSave]:
             boxMake.add_widget(item)
 
         pop = Popup(title = "New File", 
                     content = boxMake,
-                    size = (500,500), 
+                    size = (550,550), 
                     size_hint=(None, None),
-                    auto_dismiss=True)
+                    auto_dismiss=False)
+
+        btnSave.bind(on_release = pop.dismiss)
         pop.open()
+                
 
     #If user chooses to Import a File, the File Chooser opens and they can select which file they wish 
     #to use as their rules and prompts for the string input
@@ -116,7 +134,7 @@ class Root(Widget):
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
-        ###btnSaveInput.bind(on_press = self.________input string and check_______)##################
+        ###btnSaveInput.bind(on_press = self.runIt________input string and check_______)##################
 
         for thing in [lblInput, txtInput, btnSaveInput]:
             boxInput.add_widget(thing)
@@ -136,14 +154,18 @@ class Root(Widget):
 
         popCompute.open()
 
-    def savePress (self, event):
+    def savePress (self, event, rules):
+        newFile = open(r"NewRules.txt", "w")
+        newFile.write(rules)##put in self.rule
+        newFile.close
+
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
         txtInput = TextInput()
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
-        ###btnSaveInput.bind(on_press = self.________input string and check_______)##################
+        ###btnSaveInput.bind(on_press = self.runIt________input string and check_______)##################
 
         for thing in [lblInput, txtInput, btnSaveInput]:
             boxInput.add_widget(thing)
@@ -157,13 +179,11 @@ class Root(Widget):
 
 #    def runIt (self,event):
 #       if self.flag==1:
-
+            #send rulefile send input
 #       elif self.flag == 2:
-
-#       elif self.flag == 3:
-
+            
  #      else
-  #          print('ERROR OCCURRED FLAG=0)
+  #          print('ERROR OCCURRED FLAG=0')
 
 #Execution app runs widget
 class app1(App):
