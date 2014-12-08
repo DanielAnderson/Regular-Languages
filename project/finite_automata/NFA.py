@@ -1,5 +1,6 @@
 from project.finite_automata.moveFunction import MoveFunction
 import project.finite_automata.constants as constants
+from project.finite_automata.DFA import DFA
 def convertToSet(stringListOrSet):
 	if type(stringListOrSet) is set or type(stringListOrSet) is list:
 		return set(stringListOrSet)
@@ -32,14 +33,10 @@ class NFA:
 
 	def isInLanguage(self, string):
 		currentStates = convertToSet(self.startState)
-		currentStates = self.applyLambdaMoves(currentStates)
 
 		for character in string:
 			assert character in self.alphabet
-			nextStates = set()
-			for state in currentStates: 
-				nextStates |= self.deltaFunction.getResults(state,character)
-			currentStates = self.applyLambdaMoves(nextStates) 
+			currentStates = self.applyTransition(currentStates, character)
 		return len(currentStates & self.finalStates) > 0
 
 	"""Takes a set of states and determines the set of states that can be reached by repeatedly applying lambda moves to that set
@@ -59,12 +56,31 @@ class NFA:
 
 
 
-
+	"""Applys all lambda moves one time. Does not mutate state"""
 	def applyLambdaOnce(self, states):
 		nextStates = set()
 		for state in states:
 			nextStates |= self.deltaFunction.getLambdaResults(state)
 		return nextStates
+
+	def toDFA(self):
+		return DFA(self)
+
+	"""Given a set of states and an input symbol, returns the set of states after the symbol has been read. 
+	Takes care of all lambda moves (before and after the input symbol is read)"""
+	def applyTransition(self, states, inputSymbol):
+		lambdaApplied = self.applyLambdaMoves(states)
+		characterRead = self.readCharacter(lambdaApplied, inputSymbol)
+		answer = self.applyLambdaMoves(characterRead)
+		return answer
+
+	""""Returns the result of reading a character. Does not apply lambda moves"""
+	def readCharacter(self, states, character):
+		answer = set()
+		for state in states:
+			answer |= self.deltaFunction.getResults(state, character)
+		return answer
+
 
 
 	def __str__(self):

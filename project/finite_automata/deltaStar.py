@@ -1,7 +1,7 @@
 from collections import defaultdict
 class DeltaStar(defaultdict):
 	"""Almost functionally identical to a defaultdict, except:
-	This has a default value of False and
+	This has a default value of empty set and
 	The dict prints the key.__str__() rather than just the key"""
 	def __init__(self):
 		defaultdict.__init__(self, lambda: set(), {})
