@@ -66,6 +66,9 @@ class NFA:
 			nextStates |= self.deltaFunction.getLambdaResults(state)
 		return nextStates
 
+	def toDFA(self):
+		pass
+
 
 	def __str__(self):
 		return "{\n\t" + "Q: " + self.states.__str__() + "\n\t" + "Σ: " + self.alphabet.__str__() + "\n\t" + "δ: " + self.deltaFunction.__str__() + "\n\t" + "q0: " + self.startState.__str__() + "\n\tF: " +self.finalStates.__str__() + "\n}"
