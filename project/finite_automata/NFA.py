@@ -37,9 +37,7 @@ class NFA:
 
 		for character in string:
 			assert character in self.alphabet
-			nextStates = set()
-			for state in currentStates: 
-				nextStates |= self.deltaFunction.getResults(state,character)
+			nextStates = self.readCharacter(currentStates, character)
 			currentStates = self.applyLambdaMoves(nextStates) 
 		return len(currentStates & self.finalStates) > 0
 
@@ -60,7 +58,7 @@ class NFA:
 
 
 
-
+	"""Applys all lambda moves one time. Does not mutate state"""
 	def applyLambdaOnce(self, states):
 		nextStates = set()
 		for state in states:
@@ -69,6 +67,21 @@ class NFA:
 
 	def toDFA(self):
 		return DFA(self)
+
+	"""Given a set of states and an input symbol, returns the set of states after the symbol has been read"""
+	def applyTransition(self, states, inputSymbol):
+		postLambda = set()
+		postLambda |= states
+		postLambda |= self.applyLambdaMoves(states)
+		answer = None
+
+	""""Returns the result of reading a character. Does not apply lambda moves"""
+	def readCharacter(self, states, character):
+		answer = set()
+		for state in states:
+			answer |= self.deltaFunction.getResults(state, character)
+		return answer
+
 
 
 	def __str__(self):
