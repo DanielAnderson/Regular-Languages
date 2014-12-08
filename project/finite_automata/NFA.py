@@ -33,12 +33,10 @@ class NFA:
 
 	def isInLanguage(self, string):
 		currentStates = convertToSet(self.startState)
-		currentStates = self.applyLambdaMoves(currentStates)
 
 		for character in string:
 			assert character in self.alphabet
-			nextStates = self.readCharacter(currentStates, character)
-			currentStates = self.applyLambdaMoves(nextStates) 
+			currentStates = self.applyTransition(currentStates, character)
 		return len(currentStates & self.finalStates) > 0
 
 	"""Takes a set of states and determines the set of states that can be reached by repeatedly applying lambda moves to that set
@@ -68,12 +66,13 @@ class NFA:
 	def toDFA(self):
 		return DFA(self)
 
-	"""Given a set of states and an input symbol, returns the set of states after the symbol has been read"""
+	"""Given a set of states and an input symbol, returns the set of states after the symbol has been read. 
+	Takes care of all lambda moves (before and after the input symbol is read)"""
 	def applyTransition(self, states, inputSymbol):
-		postLambda = set()
-		postLambda |= states
-		postLambda |= self.applyLambdaMoves(states)
-		answer = None
+		lambdaApplied = self.applyLambdaMoves(states)
+		characterRead = self.readCharacter(lambdaApplied, inputSymbol)
+		answer = self.applyLambdaMoves(characterRead)
+		return answer
 
 	""""Returns the result of reading a character. Does not apply lambda moves"""
 	def readCharacter(self, states, character):
