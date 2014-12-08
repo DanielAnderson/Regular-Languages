@@ -22,4 +22,15 @@ class TestParenParser(unittest.TestCase):
     def testParser3(self):
         self.assertEqual(parser.parenthesesParser('(c)'), ['c'])
 
+    def testBindUnaryString(self):
+        self.assertEqual(parser.bindUnaryInString('abc*abc+ab?'), ['ab',parser.UnaryOperation('c', '*'), 'ab',parser.UnaryOperation('c','+'), 'a', parser.UnaryOperation('b', '?')])
 
+    def testMergeStrings(self):
+        self.assertEqual(parser.mergeStrings(['a','b','c', 5, 'a', ['a','b'], 'x','y']), ['abc', 5, 'a', ['a', 'b'], 'xy'])
+
+    def testParenParseThenBind(self):
+        parenParsed = parser.parenthesesParser("ab|aab|(a | b(a | b)*)?")
+        self.assertEqual(parser.bindUnaryOperators(parenParsed), ['ab|aab|', parser.UnaryOperation(['a | b', parser.UnaryOperation(['a | b'], '*')], '?')])
+
+    def testUnpack(self):
+        self.assertEqual(parser.unpack(['a','b','c', ['a',['b'], 'c'], ['a'], ['x', 'y']], [3, 5]), ['a','b','c', 'a', ['b'], 'c', ['a'], 'x', 'y'])
