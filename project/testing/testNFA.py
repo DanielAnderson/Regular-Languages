@@ -124,8 +124,6 @@ class TestNFA(unittest.TestCase):
 
 	def test_raises_NFA1(self):
 		self.assertRaises(AssertionError, self.machine1.isInLanguage,'c')
-	def test_raises_NFA1(self):
-		self.assertRaises(AssertionError, self.machine1.toDFA().isInLanguage, 'c')
 
 	def test_JSON_parser(self):
 		# Note, we are just calling the function here. That is to test to see that the function doesn't fail
