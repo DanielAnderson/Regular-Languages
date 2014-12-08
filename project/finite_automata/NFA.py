@@ -1,5 +1,6 @@
 from project.finite_automata.moveFunction import MoveFunction
 import project.finite_automata.constants as constants
+from project.finite_automata.DFA import DFA
 def convertToSet(stringListOrSet):
 	if type(stringListOrSet) is set or type(stringListOrSet) is list:
 		return set(stringListOrSet)
@@ -67,7 +68,7 @@ class NFA:
 		return nextStates
 
 	def toDFA(self):
-		pass
+		return DFA(self)
 
 
 	def __str__(self):
