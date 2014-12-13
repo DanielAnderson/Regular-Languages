@@ -2,5 +2,8 @@
 *.sublime-project
 *.sublime-workspace
 
+#temp files
+*~
+
 #Python cache files
 *.pyc
