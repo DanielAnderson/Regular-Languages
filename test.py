@@ -11,4 +11,4 @@ for test_class in test_classes:
     suites.append(suite)
 
 suite = unittest.TestSuite(suites)
-unittest.TextTestRunner(verbosity=2).run(suite)
+unittest.TextTestRunner(verbosity=2).run(suite)howdy partner
