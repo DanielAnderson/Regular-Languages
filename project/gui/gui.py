@@ -6,6 +6,11 @@
 # Site for Linux version download http://kivy.org/#download, not yet tested
 
 
+import string
+
+from project.finite_automata.jsonToNfa import createNFA
+from project.finite_automata.NFA import NFA
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -107,12 +112,14 @@ class Root(Widget):
                                                     }
 				                    	}''', size_hint = (1, 1.3))
 
+        txtFileName = TextInput(text = "File Name",
+                        multiline = False)
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
-        btnSave.bind(on_press =  lambda but: self.savePress(event,txtInMake.text))
+        btnSave.bind(on_press =  lambda but: self.savePress(event,txtInMake.text,txtFileName.text))
         
-        for item in [lblMake, txtInMake, btnSave]:
+        for item in [lblMake, txtInMake,txtFileName, btnSave]:
             boxMake.add_widget(item)
 
         pop = Popup(title = "New File", 
@@ -154,8 +161,9 @@ class Root(Widget):
 
         popCompute.open()
 
-    def savePress (self, event, rules):
-        newFile = open(r"NewRules.txt", "w")
+    def savePress (self, event, rules, fname):
+        tName = fname + ".txt"
+        newFile = open(tName, "w")
         newFile.write(rules)##put in self.rule
         newFile.close
 
@@ -177,13 +185,10 @@ class Root(Widget):
                            auto_dismiss=True)
         popCompute.open()
 
-#    def runIt (self,event):
-#       if self.flag==1:
-            #send rulefile send input
-#       elif self.flag == 2:
-            
- #      else
-  #          print('ERROR OCCURRED FLAG=0')
+   # def runIt (self,event,file,string):
+    #   nfa = createNFA(file)
+     #  NFA nfarun(nfa)
+      # nfarun.isInLanguage
 
 #Execution app runs widget
 class app1(App):
