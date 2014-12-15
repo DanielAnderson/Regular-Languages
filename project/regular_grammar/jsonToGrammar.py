@@ -1,11 +1,12 @@
 import json
-
+from project.regular_grammar.Grammar import Grammar
+import project.regular_grammar.constants as constants
 
 
 def createGrammar(theJSON):
     theJSON = json.loads(theJSON)
     verifyGrammar(theJSON)
-    variables = set(theJSON['variables'])
+    variables = set(theJSON['Variables'])
     alphabet = set(theJSON['alphabet'])
     startVariable = theJSON['startVariable']
     theGrammar = Grammar(variables, alphabet, startVariable, finalVariables)
@@ -29,7 +30,7 @@ def addMovesFromJSON(theJSON, theGrammar):
   				if len(inputSymbol) <1:
   					theGrammar.addLambdaMove(variable, results)
                     
-		if moves[variable] in theJSON['variables']:
+		if moves[variable] in theJSON['Variables']:
 			#BEWARE: not as the same state as above
 			for variables in move[variable]:
       	
@@ -55,7 +56,7 @@ def terminals(inputSymbol, variable, result, theJSON,theGrammar):
    	else:
    		i=0;
    		tempout=string + i
-   		for tempout in theJSON["variables"]:
+   		for tempout in theJSON["Variables"]:
    			i=i+1
    			tempout=string+ i
    		theGrammar.addMove(tempin,character,tempout)
@@ -69,15 +70,15 @@ def convertToList(stringOrList):
 		return [stringOrList]
 
 def verifyGrammar(theJSON):
-	assert theJSON['startVariable'] in theJSON['variables']
+	assert theJSON['startVariable'] in theJSON['Variables']
 	assert 'lambda' not in theJSON['alphabet']
-	moves = theJSON['moves']
+	moves = theJSON['Productions']
 	for variable in moves:
-		assert variable in theJSON['variables'] 
+		assert variable in theJSON['Variables'] 
 		for alphabetMember in moves[variable]:
 			assert alphabetMember in theJSON['alphabet'] or alphabetMember == constants.LAMBDA or variable in theJSON['alphabet']
 			for nextVariable in convertToList(moves[variable][alphabetMember]):
-				assert nextVariable in theJSON['variables'] or alphabetMember == constants.LAMBDA or variable in theJSON['alphabet']
+				assert nextVariable in theJSON['Variables'] or alphabetMember == constants.LAMBDA or variable in theJSON['alphabet']
 
 
 
