@@ -173,7 +173,7 @@ class Root(Widget):
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
-        ###btnSaveInput.bind(on_press = self.runIt________input string and check_______)##################
+        btnSaveInput.bind(on_press = self.runIt())##################
 
         for thing in [lblInput, txtInput, btnSaveInput]:
             boxInput.add_widget(thing)
@@ -185,10 +185,10 @@ class Root(Widget):
                            auto_dismiss=True)
         popCompute.open()
 
-   # def runIt (self,event,file,string):
-    #   nfa = createNFA(file)
-     #  NFA nfarun(nfa)
-      # nfarun.isInLanguage
+    def runIt (self,event,file,string):
+       nfa = createNFA(file)
+       NFA nfarun(nfa)
+       nfarun.isInLanguage
 
 #Execution app runs widget
 class app1(App):
