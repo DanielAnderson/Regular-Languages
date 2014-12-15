@@ -108,24 +108,45 @@ class TestNFA(unittest.TestCase):
 		
 	def test_accept_NFA1(self):
 		self.assertTrue(self.machine1.isInLanguage('aaabbaaabb'))
+	def test_accept_DFA1(self):
+		self.assertTrue(self.machine1.toDFA().isInLanguage('aaabbaaabb'))
+
 	def test_deny_NFA1(self):
 		self.assertFalse(self.machine1.isInLanguage('aabbb'))
+	def test_deny_DFA1(self):
+		self.assertFalse(self.machine1.toDFA().isInLanguage('aabbb'))
+
 	def test_empty_NFA1(self):
 		self.assertTrue(self.machine1.isInLanguage(''))
+	def test_empty_DFA1(self):
+		self.assertTrue(self.machine1.toDFA().isInLanguage(''))
+
+
 	def test_raises_NFA1(self):
 		self.assertRaises(AssertionError, self.machine1.isInLanguage,'c')
+
 	def test_JSON_parser(self):
 		# Note, we are just calling the function here. That is to test to see that the function doesn't fail
 		jsonToNFA.createNFA(self.json1)
 	
 	def test_accept_NFA2(self):
 		self.assertTrue(self.machine2.isInLanguage('aaaaaaaaaa'))
+	def test_accept_DFA2(self):
+		self.assertTrue(self.machine2.toDFA().isInLanguage('aaaaaaaaaa'))
+
 	def test_deny_NFA2(self):
 		self.assertFalse(self.machine2.isInLanguage('aaaaa'))
+	def test_deny_DFA2(self):
+		self.assertFalse(self.machine2.toDFA().isInLanguage('aaaaa'))
+
 	def test_empty_NFA2(self):
 		self.assertFalse(self.machine2.isInLanguage(''))
+	def test_empty_NFA2(self):
+		self.assertFalse(self.machine2.toDFA().isInLanguage(''))
+
 	def test_raises_NFA2(self):
 		self.assertRaises(AssertionError, self.machine2.isInLanguage, 'aaaaaaaaaaaab')
+	
 	def test_JSON_parser2(self):
 		jsonToNFA.createNFA(self.json2)
 
