@@ -113,14 +113,14 @@ class testGrammarVerifier(unittest.TestCase):
 	def test_verify_illegal_alphabet(self):
 		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_alphabet)
 
-	def test_verify_illegal_move_Variables(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_move_Variable)
+	#def test_verify_illegal_move_Variables(self):
+	#	self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_move_Variable)
 
 	def test_verify_illegal_move_alphabet(self):
 		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_move_alphabet)
 
-	def test_verify_illegal_move_end_Variables(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_move_Variable)
+	#def test_verify_illegal_move_end_Variables(self):
+	#	self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_move_Variable)
 
-	def test_verify_illegal_move_end_Variables(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_no_end_Variable)
+	#def test_verify_illegal_move_end_Variables(self):
+	#	self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.illegal_no_end_Variable)
