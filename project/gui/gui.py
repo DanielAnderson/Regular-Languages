@@ -8,7 +8,7 @@
 
 import string
 
-from project.finite_automata.jsonToNfa import createNFA
+from project.finite_automata.jsonToNFA import createNFA
 from project.finite_automata.NFA import NFA
 
 from kivy.app import App
@@ -141,7 +141,7 @@ class Root(Widget):
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
-        ###btnSaveInput.bind(on_press = self.runIt________input string and check_______)##################
+        btnSaveInput.bind(on_press = lambda butt: self.runIt(event,filename,txtInput.text))##################
 
         for thing in [lblInput, txtInput, btnSaveInput]:
             boxInput.add_widget(thing)
@@ -159,13 +159,15 @@ class Root(Widget):
         self.impFile = filename
         print(self.impFile)#check file name 
 
-        popCompute.open()
+        if filename != "":
+            popCompute.open()
+
 
     def savePress (self, event, rules, fname):
         tName = fname + ".txt"
         newFile = open(tName, "w")
         newFile.write(rules)##put in self.rule
-        newFile.close
+        
 
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
@@ -173,7 +175,8 @@ class Root(Widget):
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
-        btnSaveInput.bind(on_press = self.runIt())##################
+        btnSaveInput.bind(on_press = lambda butt: self.runIt(event,tName,txtInput.text))##################
+        newFile.close()
 
         for thing in [lblInput, txtInput, btnSaveInput]:
             boxInput.add_widget(thing)
@@ -185,15 +188,45 @@ class Root(Widget):
                            auto_dismiss=True)
         popCompute.open()
 
-    def runIt (self,event,file,string):
-       nfa = createNFA(file)
-       NFA nfarun(nfa)
-       nfarun.isInLanguage
+
+    def popERROR (self, event):
+        poperr = Popup(title = "ERROR",
+                       content = Label(text = "Error occurred. \n Click outside popup to continue."),
+                       size = (400,400),
+                       size_hint = (None, None),
+                       auto_dismiss=True)
+        poperr.open()
+
+
+    def runIt (self,event,fileName,strCheck):
+       
+       file = open(fileName, "r")
+       
+       try:
+           nfa = createNFA(file.read())
+           result = nfa.isInLanguage(strCheck)
+       except AssertionError:
+           self.popERROR(event)
+           return
+
+       if result == True:
+            resultstr = "True"
+       else:
+            resultstr = "False"
+
+
+
+       popResult = Popup(title = "Result",
+                         content = Label (text = resultstr),
+                         size = (500,500),
+                         size_hint = (None, None),
+                         auto_dismiss=True)
+       popResult.open()
 
 #Execution app runs widget
 class app1(App):
     def build(self):
         return Root()
 
-if __name__=="__main__":
-    app1().run()
+#if __name__=="__main__":
+app1().run()
