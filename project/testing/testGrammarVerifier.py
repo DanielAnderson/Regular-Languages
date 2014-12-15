@@ -1,7 +1,7 @@
 import unittest
 from project.regular_grammar.Grammar import Grammar
 from project.regular_grammar import jsonToGrammar
-class TestGrammarVerifier(unittest.TestCase):
+class testGrammarVerifier(unittest.TestCase):
 	def setUp(self):
 		self.illegal_start_Variable = '''
         {

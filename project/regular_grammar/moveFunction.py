@@ -9,6 +9,7 @@ class Move:
         	
 	def state(self):
 		return self.myVariable
+
 	def inputSymbol(self):
 		return self.myInputSymbol
         	

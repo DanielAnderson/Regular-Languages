@@ -21,19 +21,25 @@ class TestGrammar(unittest.TestCase):
         '''
 		self.json2= '''
         {
-            "Variables": ["S", "A"],
-            "alphabet": ["a"],
-            "startVariable": "S",
-            "Productions":
-                {
-                    "S": {
-                        "aa","A"]
-                    },
-                    "A": {
-                        "a": ["lambda"]
-                    }
-                }
+    "Variables": [
+        "S",
+        "A"
+    ],
+    "alphabet": [
+        "a"
+    ],
+    "startVariable": "S",
+    "Productions": {
+        "S": {
+            "aa": "A"
+        },
+        "A": {
+            "a": [
+                "lambda"
+            ]
         }
+    }
+}
         '''
 		self.json3= '''
         {

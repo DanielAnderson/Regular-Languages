@@ -7,7 +7,7 @@ from project.testing import testGrammar
 from project.testing import testGrammarVerifier
 # To add test classes, add to this list
 
-test_classes = [testNFA.TestNFA, testNFAVerifier.TestNFAVerifier, testDFAConversion.TestDFAConversion,testGrammar.TestGrammar]
+test_classes = [testNFA.TestNFA, testNFAVerifier.TestNFAVerifier, testDFAConversion.TestDFAConversion,testGrammar.TestGrammar,testGrammarVerifier.testGrammarVerifier]
 
 
 suites = []
