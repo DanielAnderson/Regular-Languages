@@ -17,26 +17,30 @@ class DFA:
         
     """Converts from having each state as a frozenset to having normal states, determines final states"""
     def convertStates(self):
-        newStates = dict()
+        statesDict = dict()
         newMoves = dict()
         self.finalStates = set()
+        newStates = set()
         
         for index, state in enumerate(self.states):
-            newStates[state] = index
+            newName = "q" + str(index)
+            statesDict[state] = newName
             if(state & self.myNFA.finalStates):
-                self.finalStates.add(index)
+                self.finalStates.add(newName)
             if(self.startState == state):
-                self.startState = index
+                self.startState = newName
+            newStates.add(newName)
         
         for move in self.moves:
             previousMove = move
             previousStartState = move.state()
             previousResult = self.moves[move]
             
-            nextMove = Move(newStates[previousStartState], move.inputSymbol())
-            newMoves[nextMove] = newStates[previousResult]
+            nextMove = Move(statesDict[previousStartState], move.inputSymbol())
+            newMoves[nextMove] = statesDict[previousResult]
         
         self.moves = newMoves
+        self.states = newStates
         
     def generateStates(self):
         toAdd = list()
