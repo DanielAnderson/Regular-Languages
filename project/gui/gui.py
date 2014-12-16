@@ -10,6 +10,8 @@ import string
 
 from project.finite_automata.jsonToNFA import createNFA
 from project.finite_automata.NFA import NFA
+from project.regular_grammar.jsonToGrammar import createGrammar
+from project.regular_grammar.Grammar import Grammar
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -103,7 +105,7 @@ class Root(Widget):
                                                     }
 				                    	}''', size_hint = (1, 1.3))
 
-        txtFileName1 = TextInput(text = "File Name",
+        txtFileName1 = TextInput(text = "FileNameGrammar",
                         multiline = False)
         btnSave1 = Button(text = "Save File",
                            valign = 'middle',
@@ -276,24 +278,50 @@ class Root(Widget):
        
        file = open(fileName, "r")
        
-       try:
-           nfa = createNFA(file.read())
-           result = nfa.isInLanguage(strCheck)
-       except AssertionError:
-           self.popERROR(event)
-           return
 
-       if result == True:
-            resultstr = "True"
+       if self.flag == 1:
+           try:
+               nfa = createNFA(file.read())
+               result = nfa.isInLanguage(strCheck)
+           except AssertionError:
+               self.popERROR(event)
+               return
+
+           if result == True:
+                resultstr = "True"
+           else:
+                resultstr = "False"
+
+           popResult = Popup(title = "Result",
+                             content = Label (text = resultstr),
+                             size = (500,500),
+                             size_hint = (None, None),
+                             auto_dismiss=True)
+           popResult.open()
+
        else:
-            resultstr = "False"
+           try:
+               grammar = createGrammar(file.read())
+               resultgr = Grammar.isInLanguage(strCheck)
+           except AssertionError:
+               self.popERROR(event)
+               return
 
-       popResult = Popup(title = "Result",
-                         content = Label (text = resultstr),
-                         size = (500,500),
-                         size_hint = (None, None),
-                         auto_dismiss=True)
-       popResult.open()
+           if resultgr == True:
+                resultstrg = "True"
+           else:
+                resultstrg = "False"
+
+           popResultg = Popup(title = "Result",
+                             content = Label (text = resultstrg),
+                             size = (500,500),
+                             size_hint = (None, None),
+                             auto_dismiss=True)
+           popResultg.open()
+
+
+
+
 
 #Execution app runs widget
 class app1(App):
