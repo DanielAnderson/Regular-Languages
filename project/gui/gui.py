@@ -43,32 +43,23 @@ class Root(Widget):
         btnNFA.bind(on_press = self.pressed)
         btnNFA.bind(on_release = self.r1)
 
-        #dont need DFA
-        btnDFA = Button(text = "DFA",
-                        valign = 'middle',
-                        halign = 'center')
-        btnDFA.bind(on_press = self.pressed, on_release = self.r2)
 
         btnGrm = Button(text = "Regular Grammars",
                         valign = 'middle',
                         halign = 'center')
-        btnGrm.bind(on_press = self.pressed, on_release = self.r3)
+        btnGrm.bind(on_press = self.pressed, on_release = self.r2)
 
         box.add_widget(lblIntro)
         box.add_widget(btnNFA)
-        box.add_widget(btnDFA)
         box.add_widget(btnGrm)
         self.add_widget(box)
     
     #These set the flag so the program knows which function to use to check string
     def r1(self, event):
         self.flag = 1
-
+    
     def r2(self, event):
         self.flag = 2
-
-    def r3(self, event):
-        self.flag = 3
 
     #When user pushes any NFA,DFA, or Regular Grammars button, this calls this popup 
     #to ask if they are importing a file or making a file for their rules
@@ -99,8 +90,32 @@ class Root(Widget):
     #If user chooses to Make a File for the rules, then a popup is generated to save their  
     #rules in a .txt file then prompt for a string input to check against the rules 
     def makePress (self,event):
+
+        boxMake1 = BoxLayout(orientation = 'vertical')
+        lblMake1 = Label(text= "Please enter Rules")#Variables  #alphabet  #startVariable  #Productions
+        txtInMake1 = TextInput(text = '''{
+						                    "Variables": [], 
+						                    "alphabet": [], 
+						                    "startVariable": "",  
+						                    "Productions" : 
+							                        {
+                                                    
+                                                    }
+				                    	}''', size_hint = (1, 1.3))
+
+        txtFileName1 = TextInput(text = "File Name",
+                        multiline = False)
+        btnSave1 = Button(text = "Save File",
+                           valign = 'middle',
+                           halign = 'center')
+        btnSave1.bind(on_press =  lambda but: self.savePress(event,txtInMake.text,txtFileName.text))
+        
+        for item1 in [lblMake1, txtInMake1,txtFileName1, btnSave1]:
+            boxMake1.add_widget(item1)
+
+
         boxMake = BoxLayout(orientation = 'vertical')
-        lblMake = Label(text= "Please enter Rules")
+        lblMake = Label(text= "Please enter Rules")#Variables  #alphabet  #startVariable  #Productions
         txtInMake = TextInput(text = '''{
 						                    "states": [], 
 						                    "alphabet": [], 
@@ -129,7 +144,20 @@ class Root(Widget):
                     auto_dismiss=False)
 
         btnSave.bind(on_release = pop.dismiss)
-        pop.open()
+
+
+        pop1 = Popup(title = "New File", 
+                    content = boxMake1,
+                    size = (550,550), 
+                    size_hint=(None, None),
+                    auto_dismiss=False)
+
+        btnSave.bind(on_release = pop1.dismiss)
+
+        if self.flag == 1:
+            pop.open()
+        else:
+            pop1.open()
                 
 
     #If user chooses to Import a File, the File Chooser opens and they can select which file they wish 
@@ -152,6 +180,29 @@ class Root(Widget):
                            size_hint = (None, None),
                            auto_dismiss=True)
 
+
+        boxCheckConvert = BoxLayout(orientation = 'vertical')
+        btnCheck = Button(text = "Check a String",
+                           valign = 'middle',
+                           halign = 'center',
+                           #size = (400,400),
+                           size_hint = (1, .5))
+        btnCheck.bind(on_press = popCompute.open)
+        btnConvert = Button(text = "Convert to DFA",
+                           valign = 'middle',
+                           halign = 'center',
+                           #size = (400,400),
+                           size_hint = (1, .5))
+        btnConvert.bind(on_press = lambda butto: self.convertNFA(event, filename))
+        boxCheckConvert.add_widget(btnCheck)
+        boxCheckConvert.add_widget(btnConvert)
+
+
+        popCheckConvert = Popup(title = "Check String or Convert to DFA",
+                           content = boxCheckConvert,
+                           size = (400,400),
+                           size_hint = (None, None))
+
         Tk().withdraw()
         filename = askopenfilename()
         
@@ -160,7 +211,11 @@ class Root(Widget):
         print(self.impFile)#check file name 
 
         if filename != "":
-            popCompute.open()
+            if self.flag == 1 :
+                popCheckConvert.open()
+            else:
+                popCompute.open()
+
 
 
     def savePress (self, event, rules, fname):
@@ -198,6 +253,25 @@ class Root(Widget):
         poperr.open()
 
 
+
+    def convertNFA(self, event, fileName):
+       file = open(fileName, "r")
+       
+       try:
+           nfa = createNFA(file.read())
+           result = nfa.toDFA
+       except AssertionError:
+           self.popERROR(event)
+           return
+
+       popResult = Popup(title = "Result",
+                    content = Label (text = result.__str__()),
+                    size = (500,500),
+                    size_hint = (None, None),
+                    auto_dismiss=True)
+       popResult.open()
+
+
     def runIt (self,event,fileName,strCheck):
        
        file = open(fileName, "r")
@@ -213,8 +287,6 @@ class Root(Widget):
             resultstr = "True"
        else:
             resultstr = "False"
-
-
 
        popResult = Popup(title = "Result",
                          content = Label (text = resultstr),
