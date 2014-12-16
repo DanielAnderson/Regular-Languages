@@ -5,15 +5,15 @@ class TestGrammar(unittest.TestCase):
 	def setUp(self):
 		self.json1= '''
         {
-            "Variables": ["S", "A"],
+            "Variables": ["S", "B"],
             "alphabet": ["a"],
             "startVariable": "S",
             "Productions":
                 {
                     "S": {
-                        "a": ["A"]
+                        "a": ["B"]
                     },
-                    "A": {
+                    "B": {
                         "a": ["lambda"]
                     }
                 }
@@ -76,17 +76,20 @@ class TestGrammar(unittest.TestCase):
         '''
 
 	def test_verify_json1(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.json1)
+		jsonToGrammar.createGrammar(self.json1)
 
 	def test_verify_json2(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.json2)
+		jsonToGrammar.createGrammar(self.json2)
 
 	def test_verify_json3(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.json3)
+		jsonToGrammar.createGrammar(self.json3)
 
 	def test_verify_json4(self):
-		self.assertRaises(AssertionError, jsonToGrammar.createGrammar, self.json4)
+		jsonToGrammar.createGrammar(self.json4)
 
+
+
+	
         
 
 

@@ -78,7 +78,7 @@ class testGrammarVerifier(unittest.TestCase):
              "Productions":
                 {
                     "S": {
-                        "a": ["A","A"]
+                        "a": ["AA"]
                     },
                     "A": {
                         "a": ["lambda"]

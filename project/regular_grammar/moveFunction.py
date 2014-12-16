@@ -32,8 +32,8 @@ class MoveFunction:
 	"""This class is used to keep track of and map the moves that a NFA has"""
 	def __init__(self):
 		# Using DeltaStar, which inherits from defaultdict rather than the base dictionary so that False is returned rather than throwing an exception when a non existant key is used
-		self.moves #= DeltaStar()
-		self.lambdaMoves #= DeltaStar()
+		self.moves = DeltaStar()
+		self.lambdaMoves = DeltaStar()
 
 	def addMove(self, initialVariable, inputSymbol, results):
 		move = Move(initialVariable, inputSymbol)
@@ -64,8 +64,8 @@ class MoveFunction:
 		return str(self.moves)
 
 	def reversal():
-                moveObject #= deltaStar()
-                lambdaObject #= deltaStar()
+                moveObject = deltaStar()
+                lambdaObject = deltaStar()
                 for moves in self.moves:
                         variable = moves.variable()
                         inout = moves.inputSymbol()
