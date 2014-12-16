@@ -75,7 +75,6 @@ class TestGrammar(unittest.TestCase):
         }
         '''
 
-
 	def test_verify_json1(self):
 		jsonToGrammar.createGrammar(self.json1)
 
@@ -99,6 +98,19 @@ class TestGrammar(unittest.TestCase):
 
 	def test_string_json4(self):
 		jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa")
+
+	
+	def test_stringThatDontWork_json1(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
+
+	def test_stringThatDontWork_json2(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaaa"))
+
+	def test_stringThatDontWork_json3(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
+
+	def test_stringThatDontWork_json4(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaaa"))
 
 
 	
