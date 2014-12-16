@@ -110,7 +110,7 @@ class Root(Widget):
         btnSave1 = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
-        btnSave1.bind(on_press =  lambda but: self.savePress(event,txtInMake.text,txtFileName.text))
+        btnSave1.bind(on_press =  lambda but: self.savePress(event,txtInMake1.text,txtFileName1.text))
         
         for item1 in [lblMake1, txtInMake1,txtFileName1, btnSave1]:
             boxMake1.add_widget(item1)
@@ -223,7 +223,8 @@ class Root(Widget):
     def savePress (self, event, rules, fname):
         tName = fname + ".txt"
         newFile = open(tName, "w")
-        newFile.write(rules)##put in self.rule
+        newFile.write(rules)
+        #newFile.close()
         
 
         boxInput = BoxLayout(orientation = 'vertical')
@@ -302,7 +303,7 @@ class Root(Widget):
        else:
            try:
                grammar = createGrammar(file.read())
-               resultgr = Grammar.isInLanguage(strCheck)
+               resultgr = grammar.isInLanguage(strCheck)
            except AssertionError:
                self.popERROR(event)
                return
