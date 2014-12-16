@@ -87,7 +87,8 @@ class TestGrammar(unittest.TestCase):
 	def test_verify_json4(self):
 		jsonToGrammar.createGrammar(self.json4)
 
-
+	def test_string_json1(self):
+		jsonToGrammar.createGrammar(self.json1).isInLanguage("aa")
 
 	
         
