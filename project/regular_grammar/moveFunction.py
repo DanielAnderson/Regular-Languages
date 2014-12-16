@@ -63,16 +63,16 @@ class MoveFunction:
 	def __str__(self):
 		return str(self.moves)
 
-	def reversal():
-                moveObject = deltaStar()
-                lambdaObject = deltaStar()
+	def reversal(self):
+                moveObject = DeltaStar()
+                lambdaObject = DeltaStar()
                 for moves in self.moves:
-                        variable = moves.variable()
+                        variable = moves.state()
                         inout = moves.inputSymbol()
                         result = self.moves[moves]
                         moveObject[Move(result,inout)] = variable
                 for moves in self.lambdaMoves:
-                        variable = moves.variable()
+                        variable = moves.state()
                         result = self.lambdaMoves[moves]
                         lambdaObject[LambdaMove(result)] = variable
 
