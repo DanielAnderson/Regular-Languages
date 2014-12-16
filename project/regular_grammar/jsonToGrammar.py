@@ -24,50 +24,60 @@ def addMovesFromJSON(theJSON, theGrammar):
 	for variable in moves:
 		print (moves[variable])
 		for inputSymbol in moves[variable]:
-			if inputSymbol in theJSON["alphabet"]:
+			if moves[variable] in theJSON['Variables']:
+				print(moves[variable])
+				#BEWARE: not as the same state as above
+				for variables in move[variable]:
+      	
+					results = convertToList(moves[variable][variables])#returnsthe string
+					print("here")
+					if len(results) == 1:
+						theGrammar.addMove(variable, results, variables)
+					if len(result) >1:
+						print("here")
+						terminals(variable, results, variables,theJSON, theGrammar)
+					if len(result) <1:
+						theGrammar.addLambdaMove(variable, variables)
+			else:
 				print(inputSymbol) 
 			
 				#Converts string to an array including only that string
 				#leaves arrays alone
-				results = convertToList(moves[variable][inputSymbol])	
+				results = convertToList(moves[variable][inputSymbol])
+				print(inputSymbol)	
 				if len(inputSymbol) == 1:
-  					theGrammar.addMove(variable, inputSymbol, results)
+					print("=")
+					theGrammar.addMove(variable, inputSymbol, results)
 				if len(inputSymbol) >1:
-  					terminals(variable,inputSymbol, results)
+					print(">")
+					terminals(variable,inputSymbol, results,theJSON, theGrammar)
 				if len(inputSymbol) <1:
-  					theGrammar.addLambdaMove(variable, results)
+					print("<")
+					theGrammar.addLambdaMove(variable, results)
                     
-		if moves[variable] in theJSON['Variables']:
-			print(moves[variable])
-			#BEWARE: not as the same state as above
-			for variables in move[variable]:
-      	
-				results = convertToList(moves[variable][variables])#returnsthe string
-				if len(results) == 1:
-					theGrammar.addMove(variable, results, variables)
-				if len(result) >1:
-					terminals(variable, results, variables)
-				if len(result) <1:
-					theGrammar.addLambdaMove(variable, variables)
+			
 	print("done")
                    
-def terminals(inputSymbol, variable, result, theJSON,theGrammar):
+def terminals(variable, inputSymbol, result, theJSON,theGrammar):
 	#this deals with the case when there's multiple terminals by creating a new state
    #for each transition
+   print("ttttttttttttttttttttttttttttttttttttttt")
+   print(variable)
    string="temp"
    tempin=variable
    count=0
    for character in inputSymbol:
-   	
+   	print(character)
    	count= count+1
    	if count==len(inputSymbol):
    		theGrammar.addMove(tempin,character,result)
    	else:
    		i=0;
-   		tempout=string + i
+   		tempout=str(i)
    		for tempout in theJSON["Variables"]:
    			i=i+1
-   			tempout=string+ i
+   			tempout=str(i)
+   		theGrammar.variables.add(tempout)
    		theGrammar.addMove(tempin,character,tempout)
    		tempin=tempout
         
