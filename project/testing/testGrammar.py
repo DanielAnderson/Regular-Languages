@@ -90,6 +90,9 @@ class TestGrammar(unittest.TestCase):
 	def test_string_json1(self):
 		jsonToGrammar.createGrammar(self.json1).isInLanguage("aa")
 
+	def test_string_json2(self):
+		jsonToGrammar.createGrammar(self.json2).isInLanguage("aaa")
+
 	
         
 
