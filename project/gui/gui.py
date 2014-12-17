@@ -124,7 +124,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName1 = TextInput(text = "FileNameGrammar",
-                        multiline = False, size_hint = (1, .2))
+                        multiline = False, size_hint = (1, .25))
         btnSave1 = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
@@ -148,7 +148,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName = TextInput(text = "File Name",
-                        multiline = False, size_hint = (1, .2))
+                        multiline = False, size_hint = (1, .25))
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
