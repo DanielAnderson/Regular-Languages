@@ -1,0 +1,31 @@
+{
+	"description": "The second to last character is different from the first",
+	"states": ["q0","q1","q2","q3","q4", "q5", "q6"],
+	"alphabet": ["a", "b"],
+	"startState": "q0",
+	"finalStates": ["q3", "q6"],
+	"moves":
+	{
+		"q0": {
+			"a": "q1",
+			"b": "q4"
+		},
+		"q1": {
+			"a": "q1",
+			"b": ["q1", "q2"]
+		},
+		"q2": {
+			"a": "q3",
+			"b": "q3"
+		},
+
+		"q4": {
+			"a": ["q4","q5"],
+			"b": "q4"
+		},
+		"q5": {
+			"a": "q6",
+			"b": "q6"
+		}
+	}
+}
