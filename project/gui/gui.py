@@ -3,7 +3,7 @@
 #http://www.lfd.uci.edu/~gohlke/pythonlibs/
 #I tried downloading from the Kivy site but had lots of issues, 
 #this site allowed the downloads to work on Windows OS and worked with Kivy's test code.
-# Site for Linux version download http://kivy.org/#download, not yet tested
+# Site for Linux version download http://kivy.org/#download
 
 
 import string
@@ -56,7 +56,7 @@ class Root(Widget):
         box.add_widget(btnGrm)
         self.add_widget(box)
     
-    #These set the flag so the program knows which function to check string / convert to DFA
+    #These set the flag so the program knows that NFA or Regular Grammars was chosen
     def r1(self, event):
         self.flag = 1
     
@@ -90,25 +90,20 @@ class Root(Widget):
         ppu.open()
     
     #If user chooses to Make a File for the rules, then a popup is generated to save their  
-    #rules in a .txt file then prompt for a string input to check against the rules 
+    #rules in a .txt file then prompt for a string input to check against the rules. If for
+    #NFA, then a popup appears asking whether the user wants to convert to DFA or check a string
+    #against the rules
     def makePress (self,event):
-
-
-        ##########################################################
-        
         boxCheckConvert = BoxLayout(orientation = 'vertical')
         btnCheck = Button(text = "Check a String",
                            valign = 'middle',
                            halign = 'center',
-                           #size = (400,400),
                            size_hint = (1, .5))
         btnCheck.bind(on_press =  lambda but: self.savePress(event,txtInMake.text,txtFileName.text))
         btnConvert = Button(text = "Convert to DFA",
                            valign = 'middle',
                            halign = 'center',
-                           #size = (400,400),
                            size_hint = (1, .5))
-        #btnConvert.bind(on_press = lambda butto: self.convertNFA(event, filename))
         boxCheckConvert.add_widget(btnCheck)
         boxCheckConvert.add_widget(btnConvert)
 
@@ -118,7 +113,6 @@ class Root(Widget):
                            size = (400,400),
                            size_hint = (None, None),
                            auto_dismiss=True)
-        ##################################################################
 
 
         boxMake1 = BoxLayout(orientation = 'vertical')
@@ -145,7 +139,7 @@ class Root(Widget):
 
 
         boxMake = BoxLayout(orientation = 'vertical')
-        lblMake = Label(text= "Please enter Rules")#Variables  #alphabet  #startVariable  #Productions
+        lblMake = Label(text= "Please enter Rules")
         txtInMake = TextInput(text = '''{
 						                    "states": [], 
 						                    "alphabet": [], 
@@ -201,16 +195,13 @@ class Root(Widget):
             pop1.open()
     
             
-            
+    #This function helps the makePress function by allowing the function to call convertNFA 
     def helper (self, event, fileName, rules):
         tName = fileName + ".txt"
         newFile = open(tName, "w")
         newFile.write(rules)
         newFile.close()
         self.convertNFA(event, tName)
-        #newFile.close()
-            
-            
                         
 
     #If user chooses to Import a File, the File Chooser opens and they can select which file they wish 
@@ -276,8 +267,6 @@ class Root(Widget):
         tName = fname + ".txt"
         newFile = open(tName, "w")
         newFile.write(rules)
-        #newFile.close()
-        
 
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
@@ -327,11 +316,11 @@ class Root(Widget):
        popResult.open()
 
 
+    
     def runIt (self,event,fileName,strCheck):
        
        file = open(fileName, "r")
        
-
        if self.flag == 1:
            try:
                nfa = createNFA(file.read())
