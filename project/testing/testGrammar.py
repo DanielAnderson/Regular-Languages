@@ -132,86 +132,66 @@ class TestGrammar(unittest.TestCase):
         }
         '''
 
-	def test_verify_json1(self):
+	def test_verify_grammar1(self):
 		jsonToGrammar.createGrammar(self.json1)
 
-	def test_verify_json2(self):
+	def test_verify_grammar2(self):
 		jsonToGrammar.createGrammar(self.json2)
 
-	def test_verify_json3(self):
+	def test_verify_grammar3(self):
 		jsonToGrammar.createGrammar(self.json3)
 
-	def test_verify_json4(self):
+	def test_verify_grammar4(self):
 		jsonToGrammar.createGrammar(self.json4)
 
-	def test_verify_json5(self):
+	def test_verify_grammar5(self):
 		jsonToGrammar.createGrammar(self.json5)
 
-	def test_verify_json6(self):
+	def test_verify_grammar6(self):
 		jsonToGrammar.createGrammar(self.json6)
-	def test_verify_json7(self):
 	
+	def test_verify_grammar7(self):	
 		jsonToGrammar.createGrammar(self.json7)
-	def test_string_json1(self):
+	
+	def test_string_grammar1(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json1).isInLanguage("aa"))
 
-	def test_string_json2(self):
+	def test_string_grammar2(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json2).isInLanguage("aaa"))
 
-	def test_string_json3(self):
+	def test_string_grammar3(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json3).isInLanguage("aa"))
 
-	def test_string_json4(self):
+	def test_string_grammar4(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
 
-
-	def test_string_json5(self):
+	def test_string_grammar5(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json5).isInLanguage("aab"))
-
-
 
 	def test_string_json6(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json6).isInLanguage("baab"))
 
-	
-
 	def test_string_json7(self):
 		self.assertTrue(jsonToGrammar.createGrammar(self.json7).isInLanguage("aaab"))
 
-	
-	def test_stringThatDontWork_json1(self):
+	def test_stringThatDontWork_grammar1(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json1).isInLanguage("aaa"))
 
-	def test_stringThatDontWork_json2(self):
+	def test_stringThatDontWork_grammar2(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json2).isInLanguage("aaaa"))
 
-	def test_stringThatDontWork_json3(self):
+	def test_stringThatDontWork_grammar3(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json3).isInLanguage("aaa"))
 
-	def test_stringThatDontWork_json4(self):
+	def test_stringThatDontWork_grammar4(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaaa"))
 
-
-	def test_stringThatDontWork_json5(self):
+	def test_stringThatDontWork_grammar5(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json5).isInLanguage("aaaa"))
-
-
-	
  
-	def test_stringThatDontWork_json6(self):
+	def test_stringThatDontWork_grammar6(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json6).isInLanguage("aaaa"))
 
-
-		
- 
-	def test_stringThatDontWork_json7(self):
+	def test_stringThatDontWork_grammar7(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json7).isInLanguage("aaaa"))
-
-
-	
- 
-	
-        
-
-
 

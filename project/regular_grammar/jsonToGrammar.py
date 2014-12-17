@@ -2,7 +2,7 @@ import json
 from project.regular_grammar.Grammar import Grammar
 import project.regular_grammar.constants as constants
 
-
+#this is the method that should be called when converting a json to a grammar
 def createGrammar(theJSON):
     theJSON = json.loads(theJSON)
     verifyGrammar(theJSON)
@@ -15,6 +15,7 @@ def createGrammar(theJSON):
     
     theGrammar.NFA()
     return theGrammar
+#this goes through the productions in theJSON and addes them to the Grammar 
 
 def addMovesFromJSON(theJSON, theGrammar):
 	moves = theJSON['Productions']
@@ -26,10 +27,13 @@ def addMovesFromJSON(theJSON, theGrammar):
 			if inputSymbol in theJSON['Variables']:
 				
 				theGrammar.setToRightDir()
-				
-				#BEWARE: not as the same state as above
+# if the first symbol is in Variables then we know that the language is right linear so we tell the grammar that
+#the result of moves[variable][inputSymbol] should be a set of some terminals
+#if its just one then we know to addMove 
+#if its less then one then it must be a lambda move (which shouldnt happen)
+#if its more then one then we call terminal and have it add it to theGrammar
       	
-				results = moves[variable][inputSymbol]#returnsthe string
+				results = moves[variable][inputSymbol]
 					
 				if len(results) == 1:
 					
@@ -42,6 +46,9 @@ def addMovesFromJSON(theJSON, theGrammar):
 						
 			elif inputSymbol==constants.LAMBDA:
 				results = moves[variable][inputSymbol]
+#in this case the input symbol is lambda which we dont know if that means its for alphabet or variable then we must check its result to see what that lambda represents 
+#like if the result is in Variables then the lambda represents a null alphabet
+# or if the result is in alphabet then we know the lambda is a Variable to move to 
 				
 				if 	results in theJSON['Variables']:
 						theGrammar.addLambdaMove(variable, results)
@@ -56,10 +63,13 @@ def addMovesFromJSON(theJSON, theGrammar):
 						
 						
 			else:
-				
+# if the first symbol is in alphabet then we know that the language is left linear 
+#the result of moves[variable][inputSymbol] should be a Variable
+#if the first symbol just one then we know to addMove 
+#if the first symbol less then one then it must be a lambda move (which shouldnt happen)
+#if the first symbol more then one then we call terminal and have it add it to theGrammar				
 			
-				#Converts string to an array including only that string
-				#leaves arrays alone
+				
 				results = convertToList(moves[variable][inputSymbol])
 					
 				if len(inputSymbol) == 1:
@@ -76,7 +86,7 @@ def addMovesFromJSON(theJSON, theGrammar):
 	
                    
 def terminals(variable, inputSymbol, result, theJSON,theGrammar):
-	#this deals with the case when there's multiple terminals by creating a new state
+#this deals with the case when there's multiple terminals by creating a new state for each terminal and haveing each character have an idvidual move
   
    tempin=variable
    count=0
@@ -107,7 +117,7 @@ def convertToList(stringOrList):
 		return [stringOrList]
 
 def verifyGrammar(theJSON):
-#verifies that the json of the grammar is correct
+#verifies that the json of the grammar is a possible json
 	assert theJSON['startVariable'] in theJSON['Variables']
 	assert 'lambda' not in theJSON['alphabet']
 	moves = theJSON['Productions']

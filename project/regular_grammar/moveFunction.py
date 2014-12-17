@@ -1,6 +1,6 @@
 from project.regular_grammar.deltaStar import DeltaStar
 import project.regular_grammar.constants as constants
-#have to make it reversable
+
 class Move:
 	"""Represents a move- with a state (string) and input symbol (string)"""
 	def __init__(self, variable, inputSymbol):
@@ -63,19 +63,4 @@ class MoveFunction:
 	def __str__(self):
 		return str(self.moves)
 
-	def reversal(self):
-                moveObject = DeltaStar()
-                lambdaObject = DeltaStar()
-                for moves in self.moves:
-                        variable = moves.state()
-                        inout = moves.inputSymbol()
-                        result = self.moves[moves]
-                        moveObject[Move(result,inout)] = variable
-                for moves in self.lambdaMoves:
-                        variable = moves.state()
-                        result = self.lambdaMoves[moves]
-                        lambdaObject[LambdaMove(result)] = variable
-
-                self.moves = moveObject
-                self.lambdaMoves = lambdaObject
 
