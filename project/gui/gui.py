@@ -30,10 +30,6 @@ from tkinter.filedialog import askopenfilename
 #Main Widget
 class Root(Widget):
     flag = 0
-    #newFile = ""
-    #impFile = ""
-    #input = ""
-    #rule = ""
     def __init__(self):
         Widget.__init__(self)
         box = BoxLayout(orientation= 'vertical',
@@ -157,12 +153,9 @@ class Root(Widget):
                            valign = 'middle',
                            halign = 'center')
         btnSave.bind(on_press = popCheckConvert.open)
-        
-        
+              
 
         btnConvert.bind(on_press = lambda button: self.helper(event, txtFileName.text, txtInMake.text))
-
-
 
 
 
@@ -205,7 +198,8 @@ class Root(Widget):
                         
 
     #If user chooses to Import a File, the File Chooser opens and they can select which file they wish 
-    #to use as their rules and prompts for the string input
+    #to use as their rules. If selected in NFA, the program prompts whether they want to convert to DFA
+    #or check a string against rules
     def importPress (self,event):
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
@@ -251,9 +245,7 @@ class Root(Widget):
         Tk().withdraw()
         filename = askopenfilename()
         
-        print(self.flag)#check flag changes
-        #self.impFile = filename
-        #print(self.impFile)#check file name 
+        print(self.flag)
 
         if filename != "":
             if self.flag == 1 :
