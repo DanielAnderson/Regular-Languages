@@ -12,6 +12,7 @@ def createGrammar(theJSON):
       
     theGrammar = Grammar(variables, alphabet, startVariable)
     addMovesFromJSON(theJSON, theGrammar)
+    
     theGrammar.NFA()
     return theGrammar
 
@@ -19,21 +20,41 @@ def addMovesFromJSON(theJSON, theGrammar):
 	moves = theJSON['Productions']
 	
 	for variable in moves:
+		
 		for inputSymbol in moves[variable]:
-			if moves[variable] in theJSON['Variables']:
 			
+			if inputSymbol in theJSON['Variables']:
+				
+				theGrammar.setToRightDir()
+				
 				#BEWARE: not as the same state as above
-				for variables in move[variable]:
       	
-					results = convertToList(moves[variable][variables])#returnsthe string
+				results = moves[variable][inputSymbol]#returnsthe string
 					
+				if len(results) == 1:
+					
+					theGrammar.addMove(variable, results, inputSymbol)
+				if len(results) >1:
+				
+					terminals(variable, results, inputSymbol,theJSON, theGrammar)
+				if len(results) <1:
+					theGrammar.addLambdaMove(variable, inputSymbol)
+						
+			elif inputSymbol==constants.LAMBDA:
+				results = moves[variable][inputSymbol]
+				
+				if 	results in theJSON['Variables']:
+						theGrammar.addLambdaMove(variable, results)
+						
+				else:		
 					if len(results) == 1:
-						theGrammar.addMove(variable, results, variables)
-					if len(result) >1:
-					
-						terminals(variable, results, variables,theJSON, theGrammar)
-					if len(result) <1:
-						theGrammar.addLambdaMove(variable, variables)
+						
+						theGrammar.addMove(variable, results, [constants.LAMBDA])
+					if len(results) >1:
+				
+						terminals(variable, results, constants.LAMBDA,theJSON, theGrammar)
+						
+						
 			else:
 				
 			
