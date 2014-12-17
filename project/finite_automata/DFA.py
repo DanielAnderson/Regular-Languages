@@ -100,7 +100,6 @@ class DFA:
 
     def movesToString(self):
         conversionDict = dict()
-        print(len(self.moves.keys()))
         for move in self.moves:
             originalState = move.state()
             inputSymbol = move.inputSymbol()
