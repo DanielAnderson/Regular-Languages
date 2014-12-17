@@ -1,0 +1,21 @@
+{
+    "Description": "Starts with one a and ends with odd number of b's",
+    "Variables": [
+        "S",
+        "B"
+    ],
+    "alphabet": [
+        "a",
+        "b"
+    ],
+    "startVariable": "S",
+    "Productions": {
+        "S": {
+            "a": "B"
+        },
+        "B": {
+            "bb": "B",
+            "b": "lambda"
+        }
+    }
+}

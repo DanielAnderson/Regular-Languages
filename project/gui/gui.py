@@ -124,7 +124,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName1 = TextInput(text = "FileNameGrammar",
-                        multiline = False)
+                        multiline = False, size_hint = (1, .25))
         btnSave1 = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
@@ -148,7 +148,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName = TextInput(text = "File Name",
-                        multiline = False)
+                        multiline = False, size_hint = (1, .25))
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
@@ -203,7 +203,7 @@ class Root(Widget):
     def importPress (self,event):
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput(multiline = False)
+        txtInput = TextInput(multiline = False, focus=True)
         txtInput.bind(on_text_validate = lambda butt: self.runIt(event,filename,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
@@ -263,7 +263,7 @@ class Root(Widget):
 
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput(multiline = False)
+        txtInput = TextInput(multiline = False, focus=True)
         txtInput.bind(on_text_validate= lambda butt: self.runIt(event,tName,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
@@ -306,7 +306,7 @@ class Root(Widget):
 
        boxResult = BoxLayout(orientation = 'vertical')
        txtResult = TextInput (text = result.__str__())
-       btnResult = Button ( text = "Go Back" )
+       btnResult = Button ( text = "Go Back", size_hint = (1, .2) )
        boxResult.add_widget(txtResult)
        boxResult.add_widget(btnResult)
 
@@ -342,7 +342,7 @@ class Root(Widget):
            
            boxResult1 = BoxLayout(orientation = 'vertical')
            txtResult1 = Label (text = resultstr)
-           btnResult1 = Button ( text = "Go Back" )
+           btnResult1 = Button ( text = "Go Back", size_hint = (1, .2) )
            boxResult1.add_widget(txtResult1)
            boxResult1.add_widget(btnResult1)
 
@@ -372,7 +372,7 @@ class Root(Widget):
 
            boxResult2 = BoxLayout(orientation = 'vertical')
            txtResult2 = Label (text = resultstrg)
-           btnResult2 = Button ( text = "Go Back" )
+           btnResult2 = Button ( text = "Go Back", size_hint = (1, .2) )
            boxResult2.add_widget(txtResult2)
            boxResult2.add_widget(btnResult2)
 
