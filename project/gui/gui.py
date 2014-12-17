@@ -295,6 +295,7 @@ class Root(Widget):
     def convertNFA(self, event, fileName):
        file = open(fileName, "r")
        
+ 
        try:
            nfa = createNFA(file.read())
            result = nfa.toDFA()
@@ -302,11 +303,20 @@ class Root(Widget):
            self.popERROR(event)
            return
 
+
+       boxResult = BoxLayout(orientation = 'vertical')
+       txtResult = TextInput (text = result.__str__())
+       btnResult = Button ( text = "Go Back" )
+       boxResult.add_widget(txtResult)
+       boxResult.add_widget(btnResult)
+
        popResult = Popup(title = "Result",
-                    content = TextInput (text = result.__str__()),
+                    content = boxResult,
                     size = (500,500),
                     size_hint = (None, None),
                     auto_dismiss=True)
+
+       btnResult.bind(on_press = popResult.dismiss)
        popResult.open()
 
 
@@ -327,12 +337,23 @@ class Root(Widget):
                 resultstr = "True"
            else:
                 resultstr = "False"
+           
+
+           
+           boxResult1 = BoxLayout(orientation = 'vertical')
+           txtResult1 = Label (text = resultstr)
+           btnResult1 = Button ( text = "Go Back" )
+           boxResult1.add_widget(txtResult1)
+           boxResult1.add_widget(btnResult1)
 
            popResult = Popup(title = "Result",
-                             content = Label (text = resultstr),
-                             size = (500,500),
-                             size_hint = (None, None),
-                             auto_dismiss=True)
+                        content = boxResult1,
+                        size = (500,500),
+                        size_hint = (None, None),
+                        auto_dismiss=True)
+
+           btnResult1.bind(on_press = popResult.dismiss)
+
            popResult.open()
 
        else:
@@ -348,11 +369,21 @@ class Root(Widget):
            else:
                 resultstrg = "False"
 
+
+           boxResult2 = BoxLayout(orientation = 'vertical')
+           txtResult2 = Label (text = resultstrg)
+           btnResult2 = Button ( text = "Go Back" )
+           boxResult2.add_widget(txtResult2)
+           boxResult2.add_widget(btnResult2)
+
            popResultg = Popup(title = "Result",
-                             content = Label (text = resultstrg),
-                             size = (500,500),
-                             size_hint = (None, None),
-                             auto_dismiss=True)
+                        content = boxResult2,
+                        size = (500,500),
+                        size_hint = (None, None),
+                        auto_dismiss=True)
+
+           btnResult2.bind(on_press = popResultg.dismiss)
+
            popResultg.open()
 
 
