@@ -3,6 +3,7 @@ from project.regular_grammar.Grammar import Grammar
 from project.regular_grammar import jsonToGrammar
 class TestGrammar(unittest.TestCase):
 	def setUp(self):
+	#terminals infront and only one of them 
 		self.json1= '''
         {
             "Variables": ["S", "B"],
@@ -19,6 +20,7 @@ class TestGrammar(unittest.TestCase):
                 }
         }
         '''
+        #terminals in the front of but a string
 		self.json2= '''
         {
     "Variables": [
@@ -41,6 +43,7 @@ class TestGrammar(unittest.TestCase):
     }
 }
         '''
+        #termials in the rear
 		self.json3= '''
         {
             "Variables": ["S", "A"],
@@ -57,9 +60,10 @@ class TestGrammar(unittest.TestCase):
                 }
         }
         '''
-        
+        #terminals in the rear and a string
 		self.json4= '''
         {
+
             "Variables": ["S", "A"],
             "alphabet": ["a"],
             "startVariable": "S",
@@ -70,6 +74,59 @@ class TestGrammar(unittest.TestCase):
                     },
                     "A": {
                         "lambda":"a"
+                    }
+                }
+        }
+        '''
+        #multiple letters
+		self.json5= '''
+        {
+            "Variables": ["S", "A"],
+            "alphabet": ["a", "b"],
+            "startVariable": "S",
+            "Productions":
+                {
+                    "S": {
+                        "aa":"A"
+                    },
+                    "A": {
+                        "b":"lambda"
+                    }
+                }
+        }
+        '''
+        #multiple moves
+		self.json6= '''
+        {
+            "Variables": ["S", "A"],
+            "alphabet": ["a", "b"],
+            "startVariable": "S",
+            "Productions":
+                {
+                    "S": {
+                        "A":"aa",
+                        "S":"b"
+                    },
+                    "A": {
+                        "lambda":"b"
+                    }
+                }
+        }
+        '''	
+        #multiple moves with the 	
+		self.json7= '''
+        {
+            "Variables": ["S", "A"],
+            "alphabet": ["a", "b"],
+            "startVariable": "S",
+            "Productions":
+                {
+                    "S": {
+                        "aa":"A",
+                        "a":"S"
+                    },
+                    "A": {
+                        "b":"lambda"
                     }
                 }
         }
@@ -87,32 +144,72 @@ class TestGrammar(unittest.TestCase):
 	def test_verify_json4(self):
 		jsonToGrammar.createGrammar(self.json4)
 
+	def test_verify_json5(self):
+		jsonToGrammar.createGrammar(self.json5)
+
+	def test_verify_json6(self):
+		jsonToGrammar.createGrammar(self.json6)
+	def test_verify_json7(self):
+	
+		jsonToGrammar.createGrammar(self.json7)
 	def test_string_json1(self):
-		jsonToGrammar.createGrammar(self.json1).isInLanguage("aa")
+		self.assertTrue(jsonToGrammar.createGrammar(self.json1).isInLanguage("aa"))
 
 	def test_string_json2(self):
-		jsonToGrammar.createGrammar(self.json2).isInLanguage("aaa")
+		self.assertTrue(jsonToGrammar.createGrammar(self.json2).isInLanguage("aaa"))
 
 	def test_string_json3(self):
-		jsonToGrammar.createGrammar(self.json3).isInLanguage("aa")
+		self.assertTrue(jsonToGrammar.createGrammar(self.json3).isInLanguage("aa"))
 
 	def test_string_json4(self):
-		jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa")
+		self.assertTrue(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
+
+
+	def test_string_json5(self):
+		self.assertTrue(jsonToGrammar.createGrammar(self.json5).isInLanguage("aab"))
+
+
+
+	def test_string_json6(self):
+		self.assertTrue(jsonToGrammar.createGrammar(self.json6).isInLanguage("baab"))
+
+	
+
+	def test_string_json7(self):
+		self.assertTrue(jsonToGrammar.createGrammar(self.json7).isInLanguage("aaab"))
 
 	
 	def test_stringThatDontWork_json1(self):
-		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
+		self.assertFalse(jsonToGrammar.createGrammar(self.json1).isInLanguage("aaa"))
 
 	def test_stringThatDontWork_json2(self):
-		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaaa"))
+		self.assertFalse(jsonToGrammar.createGrammar(self.json2).isInLanguage("aaaa"))
 
 	def test_stringThatDontWork_json3(self):
-		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaa"))
+		self.assertFalse(jsonToGrammar.createGrammar(self.json3).isInLanguage("aaa"))
 
 	def test_stringThatDontWork_json4(self):
 		self.assertFalse(jsonToGrammar.createGrammar(self.json4).isInLanguage("aaaa"))
 
 
+	def test_stringThatDontWork_json5(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json5).isInLanguage("aaaa"))
+
+
+	
+ 
+	def test_stringThatDontWork_json6(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json6).isInLanguage("aaaa"))
+
+
+		
+ 
+	def test_stringThatDontWork_json7(self):
+		self.assertFalse(jsonToGrammar.createGrammar(self.json7).isInLanguage("aaaa"))
+
+
+	
+ 
 	
         
 
