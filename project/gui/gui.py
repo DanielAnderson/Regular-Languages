@@ -203,7 +203,8 @@ class Root(Widget):
     def importPress (self,event):
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput()
+        txtInput = TextInput(multiline = False)
+        txtInput.bind(on_text_validate = lambda butt: self.runIt(event,filename,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
@@ -262,7 +263,8 @@ class Root(Widget):
 
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput()
+        txtInput = TextInput(multiline = False)
+        txtInput.bind(on_text_validate= lambda butt: self.runIt(event,tName,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
                            halign = 'center')
