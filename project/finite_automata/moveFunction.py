@@ -14,6 +14,7 @@ class MoveFunction:
 		self.moves = DeltaStar()
 		self.lambdaMoves = DeltaStar()
 
+	"""Adds move"""
 	def addMove(self, initialState, inputSymbol, results):
 		move = Move(initialState, inputSymbol)
 		previousResult = self.moves[move]
@@ -23,6 +24,7 @@ class MoveFunction:
 		else:
 			self.moves[move] = set(results);
 
+	"""Adds a lambda move"""
 	def addLambdaMove(self, initialState, results):
 		move = LambdaMove(initialState)
 		previousResult = self.lambdaMoves[move]
@@ -33,12 +35,15 @@ class MoveFunction:
 			self.lambdaMoves[move] = set(results)
 
 
+	"""Gets results from reading a symbol from a certain initial state"""
 	def getResults(self, initialState, inputSymbol):
 		return self.moves[Move(initialState, inputSymbol)]
 
+	"""Gets lambda results"""
 	def getLambdaResults(self, initialState):
 		return self.lambdaMoves[LambdaMove(initialState)]
 
+	"""Returns string representation of this object"""
 	def __str__(self):
 		return str(self.moves)
 

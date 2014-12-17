@@ -2,6 +2,7 @@ import json
 from project.finite_automata.NFA import NFA
 import project.finite_automata.constants as constants
 
+"""Creates a NFA based on a JSON"""
 def createNFA(theJSON):
 	theJSON = json.loads(theJSON)
 	verifyNFA(theJSON)
@@ -13,6 +14,7 @@ def createNFA(theJSON):
 	addMovesFromJSON(theJSON, theNFA)
 	return theNFA
 
+"""Goes thruogh all of the moves in the JSON and and adds the appropriate moves to it"""
 def addMovesFromJSON(theJSON, theNFA):
 	moves = theJSON['moves']
 
@@ -24,6 +26,7 @@ def addMovesFromJSON(theJSON, theNFA):
 			for result in results:
 				theNFA.addMove(state, inputSymbol, result)
 
+"""Verifies that the NFA is valid"""
 def verifyNFA(theJSON):
 	assert theJSON['startState'] in theJSON['states']
 	assert 'lambda' not in theJSON['alphabet']
@@ -35,6 +38,8 @@ def verifyNFA(theJSON):
 			for nextState in convertToList(moves[state][alphabetMember]):
 				assert nextState in theJSON['states']
 
+
+"""Converts a string or list into a list"""
 def convertToList(stringOrList):
 	if type(stringOrList) is list:
 		return stringOrList
