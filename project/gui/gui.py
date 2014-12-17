@@ -124,7 +124,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName1 = TextInput(text = "FileNameGrammar",
-                        multiline = False)
+                        multiline = False, size_hint = (1, .25))
         btnSave1 = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
@@ -148,7 +148,7 @@ class Root(Widget):
 				                    	}''', size_hint = (1, 1.3))
 
         txtFileName = TextInput(text = "File Name",
-                        multiline = False)
+                        multiline = False, size_hint = (1, .25))
         btnSave = Button(text = "Save File",
                            valign = 'middle',
                            halign = 'center')
@@ -203,7 +203,7 @@ class Root(Widget):
     def importPress (self,event):
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput(multiline = False)
+        txtInput = TextInput(multiline = False, focus=True)
         txtInput.bind(on_text_validate = lambda butt: self.runIt(event,filename,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
@@ -263,7 +263,7 @@ class Root(Widget):
 
         boxInput = BoxLayout(orientation = 'vertical')
         lblInput = Label(text= "Please enter string you would like to test:")
-        txtInput = TextInput(multiline = False)
+        txtInput = TextInput(multiline = False, focus=True)
         txtInput.bind(on_text_validate= lambda butt: self.runIt(event,tName,txtInput.text))
         btnSaveInput = Button(text = "Save and Check",
                            valign = 'middle',
@@ -295,6 +295,7 @@ class Root(Widget):
     def convertNFA(self, event, fileName):
        file = open(fileName, "r")
        
+ 
        try:
            nfa = createNFA(file.read())
            result = nfa.toDFA()
@@ -302,11 +303,20 @@ class Root(Widget):
            self.popERROR(event)
            return
 
+
+       boxResult = BoxLayout(orientation = 'vertical')
+       txtResult = TextInput (text = result.__str__())
+       btnResult = Button ( text = "Go Back", size_hint = (1, .2) )
+       boxResult.add_widget(txtResult)
+       boxResult.add_widget(btnResult)
+
        popResult = Popup(title = "Result",
-                    content = TextInput (text = result.__str__()),
+                    content = boxResult,
                     size = (500,500),
                     size_hint = (None, None),
                     auto_dismiss=True)
+
+       btnResult.bind(on_press = popResult.dismiss)
        popResult.open()
 
 
@@ -327,12 +337,23 @@ class Root(Widget):
                 resultstr = "True"
            else:
                 resultstr = "False"
+           
+
+           
+           boxResult1 = BoxLayout(orientation = 'vertical')
+           txtResult1 = Label (text = resultstr)
+           btnResult1 = Button ( text = "Go Back", size_hint = (1, .2) )
+           boxResult1.add_widget(txtResult1)
+           boxResult1.add_widget(btnResult1)
 
            popResult = Popup(title = "Result",
-                             content = Label (text = resultstr),
-                             size = (500,500),
-                             size_hint = (None, None),
-                             auto_dismiss=True)
+                        content = boxResult1,
+                        size = (500,500),
+                        size_hint = (None, None),
+                        auto_dismiss=True)
+
+           btnResult1.bind(on_press = popResult.dismiss)
+
            popResult.open()
 
        else:
@@ -348,11 +369,21 @@ class Root(Widget):
            else:
                 resultstrg = "False"
 
+
+           boxResult2 = BoxLayout(orientation = 'vertical')
+           txtResult2 = Label (text = resultstrg)
+           btnResult2 = Button ( text = "Go Back", size_hint = (1, .2) )
+           boxResult2.add_widget(txtResult2)
+           boxResult2.add_widget(btnResult2)
+
            popResultg = Popup(title = "Result",
-                             content = Label (text = resultstrg),
-                             size = (500,500),
-                             size_hint = (None, None),
-                             auto_dismiss=True)
+                        content = boxResult2,
+                        size = (500,500),
+                        size_hint = (None, None),
+                        auto_dismiss=True)
+
+           btnResult2.bind(on_press = popResultg.dismiss)
+
            popResultg.open()
 
 
