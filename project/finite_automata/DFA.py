@@ -1,10 +1,12 @@
 from project.finite_automata.move import Move
+import json
 
 class DFA:
     def __init__(self, equivNFA):
         self.myNFA = equivNFA
         startState = set()
         startState.add(equivNFA.startState)
+        self.alphabet = equivNFA.alphabet
         
         self.startState = frozenset(startState)
         self.states = set()
@@ -66,6 +68,69 @@ class DFA:
             currentState = self.moves[move]
 
         return currentState in self.finalStates
+
+# '''
+#                     {
+#                         "states": ["q1", "q2"], 
+#                         "alphabet": ["a","b"], 
+#                         "startState": "q1", 
+#                         "finalStates": ["q1"], 
+#                         "moves" : 
+#                             {
+#                                 "q1": {
+#                                     "a": ["q1"],
+#                                     "b": ["q2"]
+#                                     },
+#                                 "q2": {
+#                                     "a": ["q2"], 
+#                                     "b": ["q1"]
+#                                     }
+#                             }
+#                     }'''
+
+    def __str__(self):
+        ans = "{\n\t"
+        ans += '"states": ' + setToListString(self.states) + ","
+        ans += '\n\t"alphabet": ' + setToListString(self.alphabet) + ","
+        ans += '\n\t"startState": ' + '"' + self.startState + '"' + ","
+        ans += '\n\t"finalStates": ' + setToListString(self.finalStates) + ","
+        ans += '\n\t"moves":' + self.movesToString()
+        ans += '}'
+        return ans
+
+    def movesToString(self):
+        conversionDict = dict()
+        print(len(self.moves.keys()))
+        for move in self.moves:
+            originalState = move.state()
+            inputSymbol = move.inputSymbol()
+            result = self.moves[move]
+            if originalState not in conversionDict.keys():
+                conversionDict[originalState] = dict()
+
+            conversionDict[originalState][inputSymbol] = result
+            
+        ans = "{\n"
+
+        for state in conversionDict:
+            toAdd = "\n" + json.dumps(conversionDict[state], sort_keys=True, indent=4)
+            toAdd = toAdd.replace("\n", "\n\t\t\t")
+            ans += toAdd
+            ans += ','
+        ans = ans[0:-1]
+        ans += "\n\t\t}\n"
+
+        return ans
+
+def setToListString(theSet):
+    ans = "["
+    for element in theSet:
+        ans += '"' + str(element) + '"' + ", "
+
+    ans = ans[0: -2] + "]"
+    return ans
+
+
     
     """Returns a new DFA for this language that is minimized"""    
     """def minimize(self):
