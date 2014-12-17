@@ -20,7 +20,7 @@ class Grammar:
     def addMove(self, initialVariable, inputSymbol, results):
     	
     	assert initialVariable in self.variables
-    	assert inputSymbol in self.alphabet or results == constants.LAMBDA
+    	#assert inputSymbol in self.alphabet or results == constants.LAMBDA
         # assert results in self.variables or results == constants.LAMBDA
     	for val in results:
     		
@@ -46,36 +46,54 @@ class Grammar:
     	
     def NFA(self):
     	jsonDict = dict()
+    	
+    	
+    	
+    	 
     	jsonDict["states"] = list(self.variables)
-    	
     	jsonDict["alphabet"] = list(self.alphabet)
+    	if self.isRight:
+    		jsonDict["startState"] = self.startVariable
     	
-    	jsonDict["startState"] = self.startVariable
+    		jsonDict["finalStates"] = self.finalVariables
+    	else:
+    		jsonDict["startState"] = self.finalVariables
     	
-    	jsonDict["finalStates"] = self.finalVariables
-    	
+    		jsonDict["finalStates"] = self.startVariable
     	jsonDict["moves"] = self.convertprod()
     
     	
     	theJSON= json.dumps(jsonDict)
     	
     	self.theNFA =createNFA(theJSON)
-    	self.theNFA.__str__()
+    	#self.theNFA.__str__()
     	return self.theNFA
 
-    def setRightDir(self):
-        self.isRight=True
+    def setToRightDir(self):
+        self.isRight=False
     
 
     def convertprod(self):
     	moves =dict()
     	
     	for move in self.productions.moves:
-    		
-    			
-    		moves[move.state()]=dict()
-    		moves[move.state()][move.inputSymbol()]=list(self.productions.getResults(move.state(),move.inputSymbol()))
-    		
+    		if self.isRight:	
+	    		moves[move.state()]=dict()
+	    		moves[move.state()][move.inputSymbol()]=list(self.productions.getResults(move.state(),move.inputSymbol()))
+	    	else:
+	    		temp=self.productions.getResults(move.state(),move.inputSymbol()).pop()
+	    		moves[temp]=dict()
+	    		
+	    		moves[temp][move.inputSymbol()]=move.state()
+    	for move in self.productions.lambdaMoves:
+    		if self.isRight:	
+	    		moves[move.state()]=dict()
+	    		moves[move.state()][constants.LAMBDA]=list(self.productions.getResults(move.state(),constants.LAMBDA))
+	    	else:		
+    			temp=self.productions.getResults(move.state(),constants.LAMBDA).pop()
+	    		moves[temp]=dict()
+	    		
+	    		moves[temp][constants.LAMBDA]=move.state()
     	return moves    	
     	
     	
