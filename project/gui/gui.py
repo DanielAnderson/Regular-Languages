@@ -282,7 +282,7 @@ class Root(Widget):
 
     def popERROR (self, event):
         poperr = Popup(title = "ERROR",
-                       content = Label(text = "Error occurred. \n Click outside popup to continue."),
+                       content = Label(text = "Error occurred. \n Please make sure inputs/rules are correct \n Click outside popup to continue."),
                        size = (400,400),
                        size_hint = (None, None),
                        auto_dismiss=True)
