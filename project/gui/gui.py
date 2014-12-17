@@ -295,13 +295,13 @@ class Root(Widget):
        
        try:
            nfa = createNFA(file.read())
-           result = nfa.toDFA
+           result = nfa.toDFA()
        except AssertionError:
            self.popERROR(event)
            return
 
        popResult = Popup(title = "Result",
-                    content = Label (text = result.__str__()),
+                    content = TextInput (text = result.__str__()),
                     size = (500,500),
                     size_hint = (None, None),
                     auto_dismiss=True)
