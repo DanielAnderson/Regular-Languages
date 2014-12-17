@@ -1,0 +1,23 @@
+
+        {
+        	"Description":"A language that accepts (ab)^i when i>0 "
+            "Variables": ["S", "A","C"],
+            "alphabet": ["a","b"],
+            "startVariable": "S",
+            "Productions":
+                {
+                    "S": {
+                        "ab":"A",
+                        "a":"C"
+                    },
+                    "A": {
+                        "ab":"lambda"
+                    },"C": {
+                        "b":"S"
+                    }
+                }
+        }
+ 
+        
+ 
+
