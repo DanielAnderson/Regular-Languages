@@ -141,7 +141,7 @@ class TestNFA(unittest.TestCase):
 
 	def test_empty_NFA2(self):
 		self.assertFalse(self.machine2.isInLanguage(''))
-	def test_empty_NFA2(self):
+	def test_empty_DFA2(self):
 		self.assertFalse(self.machine2.toDFA().isInLanguage(''))
 
 	def test_raises_NFA2(self):
