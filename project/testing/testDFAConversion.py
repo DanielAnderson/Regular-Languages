@@ -54,8 +54,8 @@ class TestDFAConversion(unittest.TestCase):
 
     def testStateGeneration1(self):
         theDFA = DFA(self.theNFA)
-        self.assertEqual(theDFA.states, {frozenset(), frozenset({'q1', 'q2'}), frozenset({'q0'})})
+        self.assertEqual(theDFA.states, {'q0','q1','q2'})
             
     def testStateGeneration2(self):
         theDFA = DFA(self.NFA2)
-        self.assertEqual(theDFA.states, {frozenset({'q0'}), frozenset({'q0', 'q1'}), frozenset({'q1'}), frozenset({'q0', 'q1', 'q2'}), frozenset({'q1', 'q2'}), frozenset({'q2'}), frozenset()})
+        self.assertEqual(theDFA.states, {'q0','q1','q2','q3','q4','q5','q6'})

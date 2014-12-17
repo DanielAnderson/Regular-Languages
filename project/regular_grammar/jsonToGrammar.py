@@ -5,13 +5,14 @@ import project.regular_grammar.constants as constants
 
 def createGrammar(theJSON):
     theJSON = json.loads(theJSON)
-    #verifyGrammar(theJSON)
+    verifyGrammar(theJSON)
     variables = set(theJSON['Variables'])
     alphabet = set(theJSON['alphabet'])
     startVariable = theJSON['startVariable']
       
     theGrammar = Grammar(variables, alphabet, startVariable)
     addMovesFromJSON(theJSON, theGrammar)
+    
     theGrammar.NFA()
     return theGrammar
 
@@ -19,21 +20,41 @@ def addMovesFromJSON(theJSON, theGrammar):
 	moves = theJSON['Productions']
 	
 	for variable in moves:
+		
 		for inputSymbol in moves[variable]:
-			if moves[variable] in theJSON['Variables']:
 			
+			if inputSymbol in theJSON['Variables']:
+				
+				theGrammar.setToRightDir()
+				
 				#BEWARE: not as the same state as above
-				for variables in move[variable]:
       	
-					results = convertToList(moves[variable][variables])#returnsthe string
+				results = moves[variable][inputSymbol]#returnsthe string
 					
+				if len(results) == 1:
+					
+					theGrammar.addMove(variable, results, inputSymbol)
+				if len(results) >1:
+				
+					terminals(variable, results, inputSymbol,theJSON, theGrammar)
+				if len(results) <1:
+					theGrammar.addLambdaMove(variable, inputSymbol)
+						
+			elif inputSymbol==constants.LAMBDA:
+				results = moves[variable][inputSymbol]
+				
+				if 	results in theJSON['Variables']:
+						theGrammar.addLambdaMove(variable, results)
+						
+				else:		
 					if len(results) == 1:
-						theGrammar.addMove(variable, results, variables)
-					if len(result) >1:
-					
-						terminals(variable, results, variables,theJSON, theGrammar)
-					if len(result) <1:
-						theGrammar.addLambdaMove(variable, variables)
+						
+						theGrammar.addMove(variable, results, [constants.LAMBDA])
+					if len(results) >1:
+				
+						terminals(variable, results, constants.LAMBDA,theJSON, theGrammar)
+						
+						
 			else:
 				
 			
@@ -86,36 +107,12 @@ def convertToList(stringOrList):
 		return [stringOrList]
 
 def verifyGrammar(theJSON):
+#verifies that the json of the grammar is correct
 	assert theJSON['startVariable'] in theJSON['Variables']
 	assert 'lambda' not in theJSON['alphabet']
 	moves = theJSON['Productions']
-	
-	for variable in moves:
-				
-		assert variable in theJSON['Variables']
-		
-		if len(variable)==1:# checks if its multiple things or just one
-					
-			if moves[variable] in theJSON['alphabet']:#chack if that thing is in the alphabet
-				
-				for alphabetMember in moves[variable]:
-
-					assert alphabetMember in theJSON['alphabet'] or alphabetMember == constants.LAMBDA
-					assert len (convertToList(moves[variable][alphabetMember])) ==1 
-					assert moves[variable][alphabetMember]==constants.LAMBDA
-					assert moves[variable][alphabetMember] in theJSON['Variables']
-			elif moves[variable] in theJSON['Variables']  or  moves[variable]==constants.LAMBDA : #chack if that thing is in the Variables  if its a lambda move
-				for VariablestMember in moves[variable]:
-					assert VariablestMember in theJSON['Variables'] or VariablestMember==constants.LAMBDA
-					for nextalphabet in convertToList(moves[variable][VariablestMember]):
-						assert alphabetMember == constants.LAMBDA or variable in theJSON['alphabet']
-			else:# if its neither 
-				assert  moves[variable] in theJSON['alphabet'] or moves[variable] in theJSON['Variables']
-
-		else:#the start of the grammer is multiple things long check if there all in alphabet 
-			for alphabetMember in moves[variable]:
-				for character in alphabetMember:
-					assert character in theJSON['alphabet']        
+	for variable in moves:			
+		assert variable in theJSON['Variables']     
 	
 
 
