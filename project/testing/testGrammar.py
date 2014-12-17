@@ -49,10 +49,10 @@ class TestGrammar(unittest.TestCase):
             "Productions":
                 {
                     "S": {
-                        "A":["a"]
+                        "A":"a"
                     },
                     "A": {
-                        "lambda":["a"]
+                        "lambda":"a"
                     }
                 }
         }
@@ -66,10 +66,10 @@ class TestGrammar(unittest.TestCase):
             "Productions":
                 {
                     "S": {
-                        "A":["aa"]
+                        "A":"aa"
                     },
                     "A": {
-                        "lambda":["a"]
+                        "lambda":"a"
                     }
                 }
         }
