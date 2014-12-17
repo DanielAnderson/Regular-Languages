@@ -1,7 +1,7 @@
 #We are going to be using Kivy for a main GUI and the included GUI Tkinter for a filechooser
-#First download pygame then download Kivy. Here is the download site:
+#First download pygame then download Kivy. Here is the download site for Windows:
 #http://www.lfd.uci.edu/~gohlke/pythonlibs/
-#I tried downloading from the Kivy site but had lots of issues, 
+#I tried downloading from the Kivy site but had lots of issues with Windows, 
 #this site allowed the downloads to work on Windows OS and worked with Kivy's test code.
 # Site for Linux version download http://kivy.org/#download
 
@@ -224,13 +224,11 @@ class Root(Widget):
         btnCheck = Button(text = "Check a String",
                            valign = 'middle',
                            halign = 'center',
-                           #size = (400,400),
                            size_hint = (1, .5))
         btnCheck.bind(on_press = popCompute.open)
         btnConvert = Button(text = "Convert to DFA",
                            valign = 'middle',
                            halign = 'center',
-                           #size = (400,400),
                            size_hint = (1, .5))
         btnConvert.bind(on_press = lambda butto: self.convertNFA(event, filename))
         boxCheckConvert.add_widget(btnCheck)
@@ -255,7 +253,7 @@ class Root(Widget):
                 popCompute.open()
 
 
-
+    #Prompts user for a string to test and computes a result
     def savePress (self, event, rules, fname):
         tName = fname + ".txt"
         newFile = open(tName, "w")
@@ -281,7 +279,7 @@ class Root(Widget):
                            auto_dismiss=True)
         popCompute.open()
 
-
+    #displays an error message when code catches an error
     def popERROR (self, event):
         poperr = Popup(title = "ERROR",
                        content = Label(text = "Error occurred. \n Please make sure inputs/rules are correct \n Click outside popup to continue."),
@@ -291,7 +289,7 @@ class Root(Widget):
         poperr.open()
 
 
-
+    #takes an NFA and converts it to DFA and displays the DFA
     def convertNFA(self, event, fileName):
        file = open(fileName, "r")
        
@@ -320,7 +318,7 @@ class Root(Widget):
        popResult.open()
 
 
-    
+    #checks whether user selected NFA or Regular grammars and computes whether the given string is in language
     def runIt (self,event,fileName,strCheck):
        
        file = open(fileName, "r")
