@@ -5,7 +5,7 @@ import project.regular_grammar.constants as constants
 
 def createGrammar(theJSON):
     theJSON = json.loads(theJSON)
-    #verifyGrammar(theJSON)
+    verifyGrammar(theJSON)
     variables = set(theJSON['Variables'])
     alphabet = set(theJSON['alphabet'])
     startVariable = theJSON['startVariable']
@@ -107,36 +107,12 @@ def convertToList(stringOrList):
 		return [stringOrList]
 
 def verifyGrammar(theJSON):
+#verifies that the json of the grammar is correct
 	assert theJSON['startVariable'] in theJSON['Variables']
 	assert 'lambda' not in theJSON['alphabet']
 	moves = theJSON['Productions']
-	
-	for variable in moves:
-				
-		assert variable in theJSON['Variables']
-		
-		if len(variable)==1:# checks if its multiple things or just one
-					
-			if moves[variable] in theJSON['alphabet']:#chack if that thing is in the alphabet
-				
-				for alphabetMember in moves[variable]:
-
-					assert alphabetMember in theJSON['alphabet'] or alphabetMember == constants.LAMBDA
-					assert len (convertToList(moves[variable][alphabetMember])) ==1 
-					assert moves[variable][alphabetMember]==constants.LAMBDA
-					assert moves[variable][alphabetMember] in theJSON['Variables']
-			elif moves[variable] in theJSON['Variables']  or  moves[variable]==constants.LAMBDA : #chack if that thing is in the Variables  if its a lambda move
-				for VariablestMember in moves[variable]:
-					assert VariablestMember in theJSON['Variables'] or VariablestMember==constants.LAMBDA
-					for nextalphabet in convertToList(moves[variable][VariablestMember]):
-						assert alphabetMember == constants.LAMBDA or variable in theJSON['alphabet']
-			else:# if its neither 
-				assert  moves[variable] in theJSON['alphabet'] or moves[variable] in theJSON['Variables']
-
-		else:#the start of the grammer is multiple things long check if there all in alphabet 
-			for alphabetMember in moves[variable]:
-				for character in alphabetMember:
-					assert character in theJSON['alphabet']        
+	for variable in moves:			
+		assert variable in theJSON['Variables']     
 	
 
 
